@@ -92,3 +92,15 @@ jspm_packages
 .node_repl_history
 
 aws_lambda/config
+
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+/tmp
+
+.DS_Store
+/vendor/assets/*
+/vendor/bundle/*
+public/assets/*
