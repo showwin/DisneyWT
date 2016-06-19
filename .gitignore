@@ -92,6 +92,7 @@ jspm_packages
 .node_repl_history
 
 aws_lambda/config
+aws_lambda/*.zip
 
 /.bundle
 

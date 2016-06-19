@@ -1,4 +1,8 @@
-// Setup API
+/*
+  WARNING: This Batch works fine only in timezone UTC
+*/
+
+// Setup
 var DisneyAPI = require("wdwjs");
 var mysql = require('mysql');
 var config = require('config');
@@ -25,7 +29,7 @@ function timeToPeriod(hours, minutes) {
   return tmp1 + tmp2;
 }
 
-function saveWaitTime(table, data, connection) {
+function saveWaitTime(table, data, connection, date) {
   var connection = mysql.createConnection({
     host     : config.get('database.host'),
     user     : config.get('database.user'),
@@ -34,6 +38,9 @@ function saveWaitTime(table, data, connection) {
   });
   connection.connect();
   for (i in data) {
+    var today = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+    var period = timeToPeriod(date.getHours(), date.getMinutes());
+
     var fastpass = '';
     var fpStatus = data[i]['fastPassStatus'] || '';
     if (data[i]['fastPass'] == true && fpStatus != 'All Fastpass Claimed') {
@@ -53,7 +60,7 @@ function saveWaitTime(table, data, connection) {
   }
 }
 
-function saveSchedule(table, data, connection) {
+function saveSchedule(table, data, connection, timeDiff) {
   var connection = mysql.createConnection({
     host     : config.get('database.host'),
     user     : config.get('database.user'),
@@ -63,9 +70,11 @@ function saveSchedule(table, data, connection) {
   connection.connect();
   for (i in data) {
       var openTime = new Date(data[i]['openingTime']);
-      var endTime = new Date(data[i]['closingTime']);
-      var open_period = timeToPeriod(openTime.getHours(), openTime.getMinutes());
-      var close_period = timeToPeriod(endTime.getHours(), endTime.getMinutes());
+      var closeTime = new Date(data[i]['closingTime']);
+      var openLocalTime = new Date(openTime.getTime() + timeDiff*3600000)
+      var closeLocalTime = new Date(closeTime.getTime() + timeDiff*3600000)
+      var open_period = timeToPeriod(openLocalTime.getHours(), openLocalTime.getMinutes());
+      var close_period = timeToPeriod(closeLocalTime.getHours(), closeLocalTime.getMinutes());
       query = 'INSERT INTO '+table+' (date, open_period, close_period) VALUES ("'+data[i]['date']+'",'+open_period+','+close_period+') ON DUPLICATE KEY UPDATE open_period = '+open_period+', close_period = '+close_period+'';
       console.log(query);
       connection.query(query, function(err, _, _) {
@@ -77,58 +86,60 @@ function saveSchedule(table, data, connection) {
   }
 }
 
-date = new Date;
-var today = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
-var period = timeToPeriod(date.getHours(), date.getMinutes());
+var dateUTC = new Date;
+var dateJST = new Date(dateUTC.getTime() + 9*3600000);
+var dateCST = new Date(dateUTC.getTime() + 8*3600000);
 
-// Shanghai Disney Resort
-var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
-ShanghaiDR.GetWaitTimes(function(err, data) {
-    if (err) return console.error("Error fetching hanghai Disney Resort wait times: " + err);
+exports.handler = function(event, context) {
+  // Shanghai Disney Resort
+  var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
+  ShanghaiDR.GetWaitTimes(function(err, data) {
+      if (err) return console.error("Error fetching hanghai Disney Resort wait times: " + err);
 
-    saveWaitTime('sdl_pasts', data, connection);
-});
-ShanghaiDR.GetOpeningTimes(function(err, data) {
-    if (err) return console.error("Error fetching hanghai Disney Resort schedule: " + err);
+      saveWaitTime('sdl_pasts', data, connection, dateCST);
+  });
+  ShanghaiDR.GetOpeningTimes(function(err, data) {
+      if (err) return console.error("Error fetching hanghai Disney Resort schedule: " + err);
 
-    saveSchedule('sdl_schedules', data, connection);
-});
+      saveSchedule('sdl_schedules', data, connection, 8);
+  });
 
-// Tokyo Disney Land
-var TokyoDL = new DisneyAPI.DisneylandTokyo();
-TokyoDL.GetWaitTimes(function(err, data) {
-    if (err) return console.error("Error fetching Tokyo Disney Land wait times: " + err);
+  // Tokyo Disney Land
+  var TokyoDL = new DisneyAPI.DisneylandTokyo();
+  TokyoDL.GetWaitTimes(function(err, data) {
+      if (err) return console.error("Error fetching Tokyo Disney Land wait times: " + err);
 
-    saveWaitTime('tdl_pasts', data, connection);
-});
-TokyoDL.GetOpeningTimes(function(err, data) {
-    if (err) return console.error("Error fetching Tokyo Disney Land schedule: " + err);
+      saveWaitTime('tdl_pasts', data, connection, dateJST);
+  });
+  TokyoDL.GetOpeningTimes(function(err, data) {
+      if (err) return console.error("Error fetching Tokyo Disney Land schedule: " + err);
 
-    saveSchedule('tdl_schedules', data, connection);
-});
+      saveSchedule('tdl_schedules', data, connection, 9);
+  });
 
-// Tokyo Disney Sea
-var TokyoDS = new DisneyAPI.DisneySeaTokyo();
-TokyoDS.GetWaitTimes(function(err, data) {
-    if (err) return console.error("Error fetching Tokyo Disney Sea wait times: " + err);
+  // Tokyo Disney Sea
+  var TokyoDS = new DisneyAPI.DisneySeaTokyo();
+  TokyoDS.GetWaitTimes(function(err, data) {
+      if (err) return console.error("Error fetching Tokyo Disney Sea wait times: " + err);
 
-    saveWaitTime('tds_pasts', data, connection);
-});
-TokyoDS.GetOpeningTimes(function(err, data) {
-    if (err) return console.error("Error fetching Tokyo Disney Sea schedule: " + err);
+      saveWaitTime('tds_pasts', data, connection, dateJST);
+  });
+  TokyoDS.GetOpeningTimes(function(err, data) {
+      if (err) return console.error("Error fetching Tokyo Disney Sea schedule: " + err);
 
-    saveSchedule('tds_schedules', data, connection);
-});
+      saveSchedule('tds_schedules', data, connection, 9);
+  });
 
-// HongKong Disney Land
-var HongKongDL = new DisneyAPI.DisneylandHongKong();
-HongKongDL.GetWaitTimes(function(err, data) {
-    if (err) return console.error("Error fetching HongKong Disney Land wait times: " + err);
+  // HongKong Disney Land
+  var HongKongDL = new DisneyAPI.DisneylandHongKong();
+  HongKongDL.GetWaitTimes(function(err, data) {
+      if (err) return console.error("Error fetching HongKong Disney Land wait times: " + err);
 
-    saveWaitTime('hdl_pasts', data, connection);
-});
-HongKongDL.GetOpeningTimes(function(err, data) {
-    if (err) return console.error("Error fetching HongKong Disney Land schedule: " + err);
+      saveWaitTime('hdl_pasts', data, connection, dateCST);
+  });
+  HongKongDL.GetOpeningTimes(function(err, data) {
+      if (err) return console.error("Error fetching HongKong Disney Land schedule: " + err);
 
-    saveSchedule('hdl_schedules', data, connection);
-});
+      saveSchedule('hdl_schedules', data, connection, 8);
+  });
+};
