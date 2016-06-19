@@ -5,6 +5,7 @@
   "main": "fetch.js",
   "dependencies": {
     "config": "^1.21.0",
+    "js-yaml": "^3.6.1",
     "mysql": "github:felixge/node-mysql",
     "wdwjs": "^3.1.3"
   },
