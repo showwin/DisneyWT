@@ -1,0 +1,25 @@
+{
+  "name": "disneywt",
+  "version": "1.0.0",
+  "description": "Disney Resort Wait Time",
+  "main": "fetch.js",
+  "dependencies": {
+    "config": "^1.21.0",
+    "mysql": "github:felixge/node-mysql",
+    "wdwjs": "^3.1.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/showwin/DisneyWT.git"
+  },
+  "author": "showwin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/showwin/DisneyWT/issues"
+  },
+  "homepage": "https://github.com/showwin/DisneyWT#readme"
+}
