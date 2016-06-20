@@ -6,12 +6,6 @@
 var DisneyAPI = require("wdwjs");
 var mysql = require('mysql');
 var config = require('config');
-var connection = mysql.createConnection({
-  host     : config.get('database.host'),
-  user     : config.get('database.user'),
-  password : config.get('database.password'),
-  database : config.get('database.database')
-});
 
 function timeToPeriod(hours, minutes) {
   /*
@@ -50,7 +44,7 @@ function saveWaitTime(table, data, connection, date) {
     var waittime = Math.max(data[i]['waitTime'], 0);
 
     query = 'INSERT INTO '+table+' (name, waittime, status, fastpass, date, period) VALUES ("'+data[i]['id']+'",'+waittime+','+data[i]['active']+',"'+fastpass+'","'+today+'",'+period+')';
-    console.log(query);
+    //console.log(query);
     connection.query(query, function(err, _, _) {
       if (err) console.log(err);
     });
@@ -76,7 +70,7 @@ function saveSchedule(table, data, connection, timeDiff) {
       var open_period = timeToPeriod(openLocalTime.getHours(), openLocalTime.getMinutes());
       var close_period = timeToPeriod(closeLocalTime.getHours(), closeLocalTime.getMinutes());
       query = 'INSERT INTO '+table+' (date, open_period, close_period) VALUES ("'+data[i]['date']+'",'+open_period+','+close_period+') ON DUPLICATE KEY UPDATE open_period = '+open_period+', close_period = '+close_period+'';
-      console.log(query);
+      //console.log(query);
       connection.query(query, function(err, _, _) {
         if (err) console.log(err);
       });
@@ -86,11 +80,12 @@ function saveSchedule(table, data, connection, timeDiff) {
   }
 }
 
-var dateUTC = new Date;
-var dateJST = new Date(dateUTC.getTime() + 9*3600000);
-var dateCST = new Date(dateUTC.getTime() + 8*3600000);
-
 exports.handler = function(event, context) {
+  var dateUTC = new Date;
+  console.log(dateUTC)
+  var dateJST = new Date(dateUTC.getTime() + 9*3600000);
+  var dateCST = new Date(dateUTC.getTime() + 8*3600000);
+
   // Shanghai Disney Resort
   var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
   ShanghaiDR.GetWaitTimes(function(err, data) {

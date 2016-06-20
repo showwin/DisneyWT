@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  root 'histories#tdl_index'
+
+  get '/history/tdl' => 'histories#tdl_index'
+  get '/history/tds' => 'histories#tds_index'
+  get '/history/sdl' => 'histories#sdl_index'
+  get '/history/hdl' => 'histories#hdl_index'
+
+  get '/forecast' => 'forecasts#developing'
+  get '/forecast/tdl' => 'forecasts#tdl_index'
+  get '/forecast/tds' => 'forecasts#tds_index'
+  get '/forecast/sdl' => 'forecasts#sdl_index'
+  get '/forecast/hdl' => 'forecasts#hdl_index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
