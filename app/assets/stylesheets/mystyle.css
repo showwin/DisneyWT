@@ -170,3 +170,7 @@ td.waittime-busy8 {
   table-layout: fixed;
   font-size: 12px;
 }
+
+p.tds_attraction {
+  margin: 5px 5px 0px;
+}

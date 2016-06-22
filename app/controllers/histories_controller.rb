@@ -8,6 +8,10 @@ class HistoriesController < ApplicationController
   end
 
   def tds_index
+    @calendar = TdsPast.average_waittime(cal_first_date, cal_last_date)
+    @calendar_old = TdsPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @waittimes = TdsPast.waittimes_on(params_date)
+    @date = params_date
   end
 
   def sdl_index

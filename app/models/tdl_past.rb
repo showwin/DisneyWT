@@ -12,8 +12,8 @@ class TdlPast < ActiveRecord::Base
       #   Thu, 02 Jun 2016 => 30,
       # }
       record = TdlPast.where('21 <= period AND period <= 40')
-               .where('? <= date AND date <= ?', begin_date, end_date)
-               .group(:date).select('AVG(waittime) AS waittime, date')
+                      .where('? <= date AND date <= ?', begin_date, end_date)
+                      .group(:date).select('AVG(waittime) AS waittime, date')
       result = {}
       (begin_date..end_date).each { |date| result[date] = 0 }
       record.each { |r| result[r.date] = r.waittime }
@@ -32,10 +32,12 @@ class TdlPast < ActiveRecord::Base
         result[period] = { 'at' => Period.to_time(period) }
       end
       TdlPast.where(date: date).find_each do |tp|
-        next unless (s.open_period...s.close_period).include?(tp.period)
+        next unless (s.open_period...s.close_period).cover?(tp.period)
         result[tp.period][tp.name] = tp.waittime_with_status
       end
       result
+    rescue
+      {}
     end
   end
 end
