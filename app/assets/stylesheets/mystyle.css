@@ -15,7 +15,7 @@ calendar {
   border: 1px solid #ecf0f1;
 }
 .calendar-bordered > thead > tr > th,
-.calendar-bordered > tbody > tr > th,
+.calendar-bortds_dered > tbody > tr > th,
 .calendar-bordered > tfoot > tr > th,
 .calendar-bordered > thead > tr > td,
 .calendar-bordered > tbody > tr > td,
@@ -173,4 +173,12 @@ td.waittime-busy8 {
 
 p.tds_attraction {
   margin: 5px 5px 0px;
+}
+
+p.sdl_attraction {
+  margin: 5px 15px 0px;
+}
+
+p.hdl_attraction {
+  margin: 5px 10px 0px;
 }
