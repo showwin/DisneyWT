@@ -1,0 +1,18 @@
+Style/AsciiComments:
+  Enabled: false
+AllCops:
+  Exclude:
+    - "vendor/**/*"
+    - "bin/**/*"
+    - "db/**/*"
+    - 'config/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'aws_lambda/**/*'
+Rails:
+  Enabled: true
+Metrics/AbcSize:
+  Max: 20
+LineLength:
+  Max: 90

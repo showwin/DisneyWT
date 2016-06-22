@@ -1,0 +1,2 @@
+# tt_toon(Toon Park) を除く 39 個
+TDL_ATTRACTIONS = %w(wb_omnibus wb_gallery wb_penny al_western al_carib al_jungle al_swiss al_tiki wl_mountain wl_gallery wl_country wl_tom wl_mark cc_splash cc_beaver fl_pooh fl_haunted fl_alice fl_small fl_castle fl_cinderella fl_pinocchio fl_peter fl_philhar fl_snow fl_dumbo tt_gadget tt_goofy tt_chip tt_donald tt_minnie tt_rabbit tl_tours tl_mountain tl_buzz tl_monster tl_grand tl_jets stitch)

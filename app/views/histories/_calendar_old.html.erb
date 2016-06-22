@@ -1,0 +1,50 @@
+<table class="table table-calendar calendar-bordered calendar-striped calendar-hover ">
+  <thead>
+    <tr>
+      <th>日</th>
+      <th>月</th>
+      <th>火</th>
+      <th>水</th>
+      <th>木</th>
+      <th>金</th>
+      <th>土</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% i = 0 %>
+    <% @calendar_old.each do |date, waittime| %>
+      <% if i % 7 == 0 %>
+        <tr>
+      <% end %>
+      <td class="calendar">
+        <a class="calendar-day" href="/history/tdl?day=<%= date.day %>&month=<%= date.month %>&year=<%= date.year %>">
+          <p class="calendar-date"><%= date.day %></p>
+          <% if waittime <= 0 %>
+            <span class="calendar-waittime btn-sm calendar-busy0">ー</span>
+          <% elsif waittime <= 14 %>
+            <span class="calendar-waittime btn-sm calendar-busy1"><%= waittime %></span>
+          <% elsif waittime <= 24 %>
+            <span class="calendar-waittime btn-sm calendar-busy2"><%= waittime %></span>
+          <% elsif waittime <= 29 %>
+            <span class="calendar-waittime btn-sm calendar-busy3"><%= waittime %></span>
+          <% elsif waittime <= 34 %>
+            <span class="calendar-waittime btn-sm calendar-busy4"><%= waittime %></span>
+          <% elsif waittime <= 39 %>
+            <span class="calendar-waittime btn-sm calendar-busy5"><%= waittime %></span>
+          <% elsif waittime <= 49 %>
+            <span class="calendar-waittime btn-sm calendar-busy6"><%= waittime %></span>
+          <% elsif waittime <= 59 %>
+            <span class="calendar-waittime btn-sm calendar-busy7"><%= waittime %></span>
+          <% else %>
+            <span class="calendar-waittime btn-sm calendar-busy8"><%= waittime %></span>
+          <% end %>
+          <!-- <span class="fa fa-cloud calendar-weather"></span> -->
+        </a>
+      </td>
+      <% if i % 7 == 6 %>
+        </tr>
+      <% end %>
+      <% i += 1 %>
+    <% end %>
+  </tbody>
+</table>
