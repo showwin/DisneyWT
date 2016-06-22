@@ -17,7 +17,7 @@
         <tr>
       <% end %>
       <td class="calendar">
-        <a class="calendar-day" href="/history/tdl?day=<%= date.day %>&month=<%= date.month %>&year=<%= date.year %>">
+        <a class="calendar-day" href="/history/<%= @type %>?day=<%= date.day %>&month=<%= date.month %>&year=<%= date.year %>">
           <p class="calendar-date"><%= date.day %></p>
           <% if waittime <= 0 %>
             <span class="calendar-waittime btn-sm calendar-busy0">ー</span>

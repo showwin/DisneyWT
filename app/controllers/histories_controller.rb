@@ -5,6 +5,7 @@ class HistoriesController < ApplicationController
     @calendar_old = TdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
     @waittimes = TdlPast.waittimes_on(params_date)
     @date = params_date
+    @type = 'tdl'
   end
 
   def tds_index
@@ -12,9 +13,15 @@ class HistoriesController < ApplicationController
     @calendar_old = TdsPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
     @waittimes = TdsPast.waittimes_on(params_date)
     @date = params_date
+    @type = 'tds'
   end
 
   def sdl_index
+    @calendar = SdlPast.average_waittime(cal_first_date, cal_last_date)
+    @calendar_old = SdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @waittimes = SdlPast.waittimes_on(params_date)
+    @date = params_date
+    @type = 'sdl'
   end
 
   def hdl_index
