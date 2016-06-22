@@ -1,0 +1,110 @@
+<h2>香港ディズニーランド 過去の平均待ち時間</h2>
+<hr>
+<div class="row">
+  <div class="col-lg-6">
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to "<< #{@date.prev_month.month}月", history_hdl_path(year: @date.prev_month.year, month: @date.prev_month.month) %>
+      </li>
+      <li>
+        <h3 style="display: inline"><%= @date.year %>年<%= @date.month %>月</h3>
+      </li>
+      <li class="next">
+        <%= link_to "#{@date.next_month.month}月 >>", history_hdl_path(year: @date.next_month.year, month: @date.next_month.month) %>
+      </li>
+    </ul>
+    <%= render partial: 'calendar' %>
+  </div>
+  <div class="col-lg-6">
+    <ul class="pager">
+      <li><h3 style="display: inline"><%= (@date - 1.year).year %>年<%= @date.month %>月</h3></li>
+    </ul>
+    <%= render partial: 'calendar_old' %>
+  </div>
+</div>
+<h3><%= @date.year %>年<%= @date.month %>月<%= @date.day %>日 待ち時間詳細</h3>
+<hr>
+<div class="row">
+  <table class="table table-waittime-detail table-striped table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th width="5%">時間</th>
+      <th>アニメアカデミー</th>
+      <th>アートアニメ</th>
+      <th>ディズニー鉄道</th>
+      <th>ビーグル</th>
+      <th>プーさんの冒険</th>
+      <th>カルーセル</th>
+      <th>空飛ぶダンボ</th>
+      <th>フェアリーテール</th>
+      <th>ガーデン</th>
+      <th>スモールワールド</th>
+      <th>ティーカップ</th>
+      <th>フィルハー</th>
+      <th>スペース</th>
+      <th>バズライトイヤー</th>
+      <th>オービトロン</th>
+      <th>スターウォーズ</th>
+      <th>オートピア</th>
+      <th>ジャングル</th>
+      <th>いかだ</th>
+      <th>ツリーハウス</th>
+      <th>RCレーサー</th>
+      <th>スリンキー</th>
+      <th>パラシュート</th>
+      <th>ビッググリズリー</th>
+      <th>ミスティックマナー</th>
+      <th>平均待ち時間</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @waittimes.each do |_, waittime| %>
+      <tr>
+        <td><%= waittime['at'].strftime('%H:%M') %></td>
+        <% HDL_ATTRACTIONS.each do |att_id| %>
+          <% if waittime[att_id].nil? || waittime[att_id] < 0 %>
+            <td class="waittime-busy0">-</td>
+          <% elsif waittime[att_id] < 10 %>
+            <td class="waittime-busy1"><%= waittime[att_id] %></td>
+          <% elsif waittime[att_id] < 20 %>
+            <td class="waittime-busy2"><%= waittime[att_id] %></td>
+          <% elsif waittime[att_id] < 30 %>
+            <td class="waittime-busy3"><%= waittime[att_id] %></td>
+          <% elsif waittime[att_id] < 60 %>
+            <td class="waittime-busy4"><%= waittime[att_id] %></td>
+          <% elsif waittime[att_id] < 90 %>
+            <td class="waittime-busy5"><%= waittime[att_id] %></td>
+          <% elsif waittime[att_id] < 120 %>
+            <td class="waittime-busy6"><%= waittime[att_id] %></td>
+          <% elsif waittime[att_id] < 170 %>
+            <td class="waittime-busy7"><%= waittime[att_id] %></td>
+          <% else %>
+            <td class="waittime-busy8"><%= waittime[att_id] %></td>
+          <% end %>
+        <% end %>
+        <% ary = waittime.values[1..waittime.values.length].select { |wt| wt >= 0 } %>
+        <% avg = ary.inject(0) {|r,i| r += i} / [ary.length, 1].max %>
+        <% if avg.nil? || avg < 0 %>
+          <td class="waittime-busy0">-</td>
+        <% elsif avg < 10 %>
+          <td class="waittime-busy1"><%= avg %></td>
+        <% elsif avg < 20 %>
+          <td class="waittime-busy2"><%= avg %></td>
+        <% elsif avg < 30 %>
+          <td class="waittime-busy3"><%= avg %></td>
+        <% elsif avg < 60 %>
+          <td class="waittime-busy4"><%= avg %></td>
+        <% elsif avg < 90 %>
+          <td class="waittime-busy5"><%= avg %></td>
+        <% elsif avg < 120 %>
+          <td class="waittime-busy6"><%= avg %></td>
+        <% elsif avg < 170 %>
+          <td class="waittime-busy7"><%= avg %></td>
+        <% else %>
+          <td class="waittime-busy8"><%= avg %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

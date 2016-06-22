@@ -55,7 +55,7 @@
     <% @waittimes.each do |_, waittime| %>
       <tr>
         <td><%= waittime['at'].strftime('%H:%M') %></td>
-        <% SDL_ATTRACTOINS.each do |att_id| %>
+        <% SDL_ATTRACTIONS.each do |att_id| %>
           <% if waittime[att_id].nil? || waittime[att_id] < 0 %>
             <td class="waittime-busy0">-</td>
           <% elsif waittime[att_id] < 10 %>

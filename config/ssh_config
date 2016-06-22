@@ -1,4 +1,4 @@
 Host disneywt
   User showwin
-  HostName disney.showwin.com
+  HostName disney.showwin.asia
   IdentityFile /home/ubuntu/.ssh/id_disneywt

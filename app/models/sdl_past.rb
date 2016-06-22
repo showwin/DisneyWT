@@ -1,3 +1,4 @@
+# Shanghai Disney Land Past
 class SdlPast < ActiveRecord::Base
   def waittime_with_status
     status ? waittime : -1

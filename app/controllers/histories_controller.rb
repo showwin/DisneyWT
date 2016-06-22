@@ -25,6 +25,11 @@ class HistoriesController < ApplicationController
   end
 
   def hdl_index
+    @calendar = HdlPast.average_waittime(cal_first_date, cal_last_date)
+    @calendar_old = HdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @waittimes = HdlPast.waittimes_on(params_date)
+    @date = params_date
+    @type = 'hdl'
   end
 
   private

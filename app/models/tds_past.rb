@@ -1,3 +1,4 @@
+# Tokyo Disney Sea Past
 class TdsPast < ActiveRecord::Base
   def waittime_with_status
     status ? waittime : -1
