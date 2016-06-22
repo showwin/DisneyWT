@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'unicorn'
 gem 'therubyracer', platforms: :ruby
+gem 'google-analytics-rails', '1.1.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
