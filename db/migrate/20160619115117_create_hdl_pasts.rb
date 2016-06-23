@@ -8,5 +8,6 @@ class CreateHdlPasts < ActiveRecord::Migration
       t.integer :period, null: false, default: 0
       t.date :date, null: false
     end
+    add_index :hdl_pasts, :date
   end
 end

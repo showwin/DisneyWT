@@ -8,5 +8,6 @@ class CreateTdlPasts < ActiveRecord::Migration
       t.integer :period, null: false, default: 0
       t.date :date, null: false
     end
+    add_index :tdl_pasts, :date
   end
 end

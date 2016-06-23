@@ -29,11 +29,13 @@ class TdsPast < ActiveRecord::Base
       # }]
       result = {}
       s = TdsSchedule.find_by(date: date)
-      s.open_period.upto(s.close_period) do |period|
+      open_period = s.nil? ? 17 : s.open_period
+      close_period = s.nil? ? 45 : s.close_period
+      open_period.upto(close_period - 1) do |period|
         result[period] = { 'at' => period }
       end
       TdsPast.where(date: date).find_each do |tp|
-        next unless (s.open_period...s.close_period).cover?(tp.period)
+        next unless (open_period...close_period).cover?(tp.period)
         result[tp.period][tp.name] = tp.waittime_with_status
       end
       result

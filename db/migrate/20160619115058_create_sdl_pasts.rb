@@ -8,5 +8,6 @@ class CreateSdlPasts < ActiveRecord::Migration
       t.integer :period, null: false, default: 0
       t.date :date, null: false
     end
+    add_index :sdl_pasts, :date
   end
 end
