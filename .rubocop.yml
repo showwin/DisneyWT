@@ -10,6 +10,7 @@ AllCops:
     - 'public/**/*'
     - 'tmp/**/*'
     - 'aws_lambda/**/*'
+    - 'app/helpers/**/*'
 Rails:
   Enabled: true
 Metrics/AbcSize:

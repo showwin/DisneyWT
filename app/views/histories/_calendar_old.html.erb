@@ -22,21 +22,21 @@
             <span><%= date.day %></span>
             <span class="calendar-schedule text-muted"><%= period_to_schedule(@cal_schedule_old[date][:open_period]) %> - <%= period_to_schedule(@cal_schedule_old[date][:close_period]) %></span><br>
           </div>
-          <% if waittime <= 0 %>
+          <% if waittime <= CALENDAR_BUSY0 %>
             <span class="calendar-waittime btn-sm calendar-busy0">ー</span>
-          <% elsif waittime <= 14 %>
+          <% elsif waittime < CALENDAR_BUSY1 %>
             <span class="calendar-waittime btn-sm calendar-busy1"><%= waittime %></span>
-          <% elsif waittime <= 24 %>
+          <% elsif waittime < CALENDAR_BUSY2 %>
             <span class="calendar-waittime btn-sm calendar-busy2"><%= waittime %></span>
-          <% elsif waittime <= 29 %>
+          <% elsif waittime < CALENDAR_BUSY3 %>
             <span class="calendar-waittime btn-sm calendar-busy3"><%= waittime %></span>
-          <% elsif waittime <= 34 %>
+          <% elsif waittime < CALENDAR_BUSY4 %>
             <span class="calendar-waittime btn-sm calendar-busy4"><%= waittime %></span>
-          <% elsif waittime <= 39 %>
+          <% elsif waittime < CALENDAR_BUSY5 %>
             <span class="calendar-waittime btn-sm calendar-busy5"><%= waittime %></span>
-          <% elsif waittime <= 49 %>
+          <% elsif waittime < CALENDAR_BUSY6 %>
             <span class="calendar-waittime btn-sm calendar-busy6"><%= waittime %></span>
-          <% elsif waittime <= 59 %>
+          <% elsif waittime < CALENDAR_BUSY7 %>
             <span class="calendar-waittime btn-sm calendar-busy7"><%= waittime %></span>
           <% else %>
             <span class="calendar-waittime btn-sm calendar-busy8"><%= waittime %></span>

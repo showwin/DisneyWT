@@ -21,4 +21,26 @@ module ApplicationHelper
       ((period - 1) / 2.0).to_s
     end
   end
+
+  def display_waittime(waittime)
+    if waittime.nil? || waittime < WAITTIME_BUSY0
+      "<td class='waittime-busy0'>-</td>"
+    elsif waittime < WAITTIME_BUSY1
+      "<td class='waittime-busy1'>#{waittime}</td>"
+    elsif waittime < WAITTIME_BUSY2
+      "<td class='waittime-busy2'>#{waittime}</td>"
+    elsif waittime < WAITTIME_BUSY3
+      "<td class='waittime-busy3'>#{waittime}</td>"
+    elsif waittime < WAITTIME_BUSY4
+      "<td class='waittime-busy4'>#{waittime}</td>"
+    elsif waittime < WAITTIME_BUSY5
+      "<td class='waittime-busy5'>#{waittime}</td>"
+    elsif waittime < WAITTIME_BUSY6
+      "<td class='waittime-busy6'>#{waittime}</td>"
+    elsif waittime < WAITTIME_BUSY7
+      "<td class='waittime-busy7'>#{waittime}</td>"
+    else
+      "<td class='waittime-busy8'>#{waittime}</td>"
+    end
+  end
 end

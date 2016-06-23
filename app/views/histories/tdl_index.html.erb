@@ -1,4 +1,4 @@
-<h2>東京ディズニーランド 過去の平均待ち時間</h2>
+<h2>東京ディズニーランド 過去の混雑指数</h2>
 <hr>
 <div class="row">
   <div class="col-lg-6">
@@ -76,47 +76,11 @@
       <tr>
         <td><%= period_to_time(waittime['at']).strftime('%H:%M') %></td>
         <% TDL_ATTRACTIONS.each do |att_id| %>
-          <% if waittime[att_id].nil? || waittime[att_id] < 0 %>
-            <td class="waittime-busy0">-</td>
-          <% elsif waittime[att_id] < 10 %>
-            <td class="waittime-busy1"><%= waittime[att_id] %></td>
-          <% elsif waittime[att_id] < 20 %>
-            <td class="waittime-busy2"><%= waittime[att_id] %></td>
-          <% elsif waittime[att_id] < 30 %>
-            <td class="waittime-busy3"><%= waittime[att_id] %></td>
-          <% elsif waittime[att_id] < 60 %>
-            <td class="waittime-busy4"><%= waittime[att_id] %></td>
-          <% elsif waittime[att_id] < 90 %>
-            <td class="waittime-busy5"><%= waittime[att_id] %></td>
-          <% elsif waittime[att_id] < 120 %>
-            <td class="waittime-busy6"><%= waittime[att_id] %></td>
-          <% elsif waittime[att_id] < 170 %>
-            <td class="waittime-busy7"><%= waittime[att_id] %></td>
-          <% else %>
-            <td class="waittime-busy8"><%= waittime[att_id] %></td>
-          <% end %>
+          <%= raw display_waittime(waittime[att_id]) %>
         <% end %>
         <% ary = waittime.values[1..waittime.values.length].select { |wt| wt >= 0 } %>
         <% avg = ary.inject(0) {|r,i| r += i} / [ary.length, 1].max %>
-        <% if avg.nil? || avg < 0 %>
-          <td class="waittime-busy0">-</td>
-        <% elsif avg < 10 %>
-          <td class="waittime-busy1"><%= avg %></td>
-        <% elsif avg < 20 %>
-          <td class="waittime-busy2"><%= avg %></td>
-        <% elsif avg < 30 %>
-          <td class="waittime-busy3"><%= avg %></td>
-        <% elsif avg < 60 %>
-          <td class="waittime-busy4"><%= avg %></td>
-        <% elsif avg < 90 %>
-          <td class="waittime-busy5"><%= avg %></td>
-        <% elsif avg < 120 %>
-          <td class="waittime-busy6"><%= avg %></td>
-        <% elsif avg < 170 %>
-          <td class="waittime-busy7"><%= avg %></td>
-        <% else %>
-          <td class="waittime-busy8"><%= avg %></td>
-        <% end %>
+        <%= raw display_waittime(avg) %>
       </tr>
     <% end %>
   </tbody>
