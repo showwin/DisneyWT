@@ -6,6 +6,12 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
   <%= analytics_init if Rails.env.production? %>
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@showwin" />
+  <meta name="twitter:title" content="ディズニー混雑状況" />
+  <meta name="twitter:description" content="2016年6月にオープンした上海ディズニーランドを含む、アジア圏4つのディズニーランドの混雑状況を確認しよう" />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/showwin/DisneyWT/master/public/sample.png" />
+  <meta name="twitter:url" content="http://disney.showwin.asia/" />
 </head>
 <body>
   <div class="container">
