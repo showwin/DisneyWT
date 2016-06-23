@@ -44,6 +44,13 @@ a.calendar-day {
   margin: 0 0 6px;
 }
 
+.calendar-schedule {
+  font-size: 9.5px;
+  position: relative;
+  top: 5.5px;
+  float: right;
+}
+
 .calendar-weather {
   float: right;
 }

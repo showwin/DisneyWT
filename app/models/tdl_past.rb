@@ -30,7 +30,7 @@ class TdlPast < ActiveRecord::Base
       result = {}
       s = TdlSchedule.find_by(date: date)
       s.open_period.upto(s.close_period) do |period|
-        result[period] = { 'at' => Period.to_time(period) }
+        result[period] = { 'at' => period }
       end
       TdlPast.where(date: date).find_each do |tp|
         next unless (s.open_period...s.close_period).cover?(tp.period)

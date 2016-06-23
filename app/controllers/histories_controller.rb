@@ -1,32 +1,40 @@
 # History Controller
 class HistoriesController < ApplicationController
   def tdl_index
-    @calendar = TdlPast.average_waittime(cal_first_date, cal_last_date)
-    @calendar_old = TdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @cal_jam = TdlPast.average_waittime(cal_first_date, cal_last_date)
+    @cal_schedule = TdlSchedule.from_to(cal_first_date, cal_last_date)
+    @cal_jam_old = TdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @cal_schedule_old = TdlSchedule.from_to(cal_1y_ago_first_date, cal_1y_ago_last_date)
     @waittimes = TdlPast.waittimes_on(params_date)
     @date = params_date
     @type = 'tdl'
   end
 
   def tds_index
-    @calendar = TdsPast.average_waittime(cal_first_date, cal_last_date)
-    @calendar_old = TdsPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @cal_jam = TdsPast.average_waittime(cal_first_date, cal_last_date)
+    @cal_schedule = TdsSchedule.from_to(cal_first_date, cal_last_date)
+    @cal_jam_old = TdsPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @cal_schedule_old = TdsSchedule.from_to(cal_1y_ago_first_date, cal_1y_ago_last_date)
     @waittimes = TdsPast.waittimes_on(params_date)
     @date = params_date
     @type = 'tds'
   end
 
   def sdl_index
-    @calendar = SdlPast.average_waittime(cal_first_date, cal_last_date)
-    @calendar_old = SdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @cal_jam = SdlPast.average_waittime(cal_first_date, cal_last_date)
+    @cal_schedule = SdlSchedule.from_to(cal_first_date, cal_last_date)
+    @cal_jam_old = SdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @cal_schedule_old = SdlSchedule.from_to(cal_1y_ago_first_date, cal_1y_ago_last_date)
     @waittimes = SdlPast.waittimes_on(params_date)
     @date = params_date
     @type = 'sdl'
   end
 
   def hdl_index
-    @calendar = HdlPast.average_waittime(cal_first_date, cal_last_date)
-    @calendar_old = HdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @cal_jam = HdlPast.average_waittime(cal_first_date, cal_last_date)
+    @cal_schedule = HdlSchedule.from_to(cal_first_date, cal_last_date)
+    @cal_jam_old = HdlPast.average_waittime(cal_1y_ago_first_date, cal_1y_ago_last_date)
+    @cal_schedule_old = HdlSchedule.from_to(cal_1y_ago_first_date, cal_1y_ago_last_date)
     @waittimes = HdlPast.waittimes_on(params_date)
     @date = params_date
     @type = 'hdl'

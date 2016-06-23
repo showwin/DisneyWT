@@ -12,13 +12,16 @@
   </thead>
   <tbody>
     <% i = 0 %>
-    <% @calendar.each do |date, waittime| %>
+    <% @cal_jam.each do |date, waittime| %>
       <% if i % 7 == 0 %>
         <tr>
       <% end %>
       <td class="calendar">
         <a class="calendar-day" href="/history/<%= @type %>?day=<%= date.day %>&month=<%= date.month %>&year=<%= date.year %>">
-          <p class="calendar-date"><%= date.day %></p>
+          <div class="calendar-date">
+            <span><%= date.day %></span>
+            <span class="calendar-schedule text-muted"><%= period_to_schedule(@cal_schedule[date][:open_period]) %> - <%= period_to_schedule(@cal_schedule[date][:close_period]) %></span><br>
+          </div>
           <% if waittime <= 0 %>
             <span class="calendar-waittime btn-sm calendar-busy0">ー</span>
           <% elsif waittime <= 14 %>
