@@ -11,7 +11,7 @@ class TdsPast < ActiveRecord::Base
       #   Wed, 01 Jun 2016 => 15,  # date => waittime
       #   Thu, 02 Jun 2016 => 30,
       # }
-      record = TdsPast.where(status: true)
+      record = TdsPast.where(status: true).where(name: TDS_MAIN_ATTRACTIONS)
                       .where('21 <= period AND period <= 40')
                       .where('? <= date AND date <= ?', begin_date, end_date)
                       .group(:date).select('AVG(waittime) AS waittime, date')
