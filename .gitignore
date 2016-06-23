@@ -94,6 +94,7 @@ jspm_packages
 aws_lambda/config
 aws_lambda/*.zip
 aws_lambda/test_fetch.js
+old_data
 
 /.bundle
 
