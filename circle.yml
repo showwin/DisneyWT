@@ -6,6 +6,6 @@ dependencies:
     - chmod 600 ~/.ssh/config
 deployment:
   production:
-    branch: master
+    branch: release
     commands:
       - bash ./scripts/deploy.sh
