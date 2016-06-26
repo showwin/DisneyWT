@@ -31,34 +31,140 @@ td.calendar {
   padding: 0 !important;
 }
 
-a.calendar-day {
-  color: #2c3e50;
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-decoration: none !important;
-  padding: 8px;
-}
-
 .calendar-date {
   margin: 0 0 6px;
 }
 
-.calendar-schedule {
-  font-size: 9.5px;
-  position: relative;
-  top: 5.5px;
-  float: right;
-}
-
-.calendar-weather {
-  float: right;
-}
-
-.calendar-waittime {
-  display: inline-block;
-  width: 60%;
+.pager-cal {
+  padding-left: 0;
+  margin: 21px 0;
+  list-style: none;
   text-align: center;
+}
+.pager-cal li {
+  display: inline;
+}
+@media only screen and (min-width:480px){
+  .pager-cal li > a,
+  .pager-cal li > span {
+    display: inline-block;
+    padding: 5px 20px;
+    background-color: #18bc9c;
+    border: 1px solid transparent;
+    border-radius: 15px;
+  }
+}
+@media only screen and (max-width:480px){
+  .pager-cal li > a,
+  .pager-cal li > span {
+    display: inline-block;
+    padding: 3px 10px;
+    background-color: #18bc9c;
+    border: 1px solid transparent;
+    border-radius: 15px;
+  }
+}
+.pager-cal li > a:hover,
+.pager-cal li > a:focus {
+  text-decoration: none;
+  background-color: #0f7864;
+}
+.pager-cal .next {
+  float: right;
+  margin-left: 10px;
+}
+.pager-cal .next > a,
+.pager-cal .next > span {
+  float: right;
+}
+.pager-cal .previous {
+  float: left;
+  margin-right: 10px;
+}
+.pager-cal .previous > a,
+.pager-cal .previous > span {
+  float: left;
+}
+
+.pager-cal:before,
+.pager-cal:after {
+  content: " ";
+  display: table;
+}
+
+.pager-cal:after {
+  clear: both;
+}
+
+.pager-cal a,
+.pager-cal a:hover {
+  color: #fff;
+}
+
+@media only screen and (min-width:480px){
+  h3.calendar-title {
+    display: inline;
+    position: relative;
+    top: 3px;
+  }
+
+  a.calendar-day {
+    color: #2c3e50;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none !important;
+    padding: 8px;
+  }
+
+  .calendar-schedule {
+    font-size: 9.5px;
+    position: relative;
+    top: 5.5px;
+    float: right;
+  }
+
+  .calendar-weather {
+    float: right;
+  }
+
+  .calendar-waittime {
+    display: inline-block;
+    width: 60%;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width:480px){
+  h3.calendar-title {
+    display: inline;
+    position: relative;
+    top: 5px;
+    font-size: 20px;
+  }
+
+  a.calendar-day {
+    color: #2c3e50;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none !important;
+    padding: 2px;
+  }
+
+  .calendar-schedule {
+    display: none;
+  }
+
+  .calendar-weather {
+    display: none;
+  }
+
+  .calendar-waittime {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 tr.calendar-index-busy0 {
@@ -219,74 +325,5 @@ td.waittime-busy8 {
 }
 
 .table-waittime-detail {
-  table-layout: fixed;
   font-size: 12px;
-}
-
-.pager-cal {
-  padding-left: 0;
-  margin: 21px 0;
-  list-style: none;
-  text-align: center;
-}
-.pager-cal li {
-  display: inline;
-}
-.pager-cal li > a,
-.pager-cal li > span {
-  display: inline-block;
-  padding: 5px 20px;
-  background-color: #18bc9c;
-  border: 1px solid transparent;
-  border-radius: 15px;
-}
-.pager-cal li > a:hover,
-.pager-cal li > a:focus {
-  text-decoration: none;
-  background-color: #0f7864;
-}
-.pager-cal .next {
-  float: right;
-  margin-left: 10px;
-}
-.pager-cal .next > a,
-.pager-cal .next > span {
-  float: right;
-}
-.pager-cal .previous {
-  float: left;
-  margin-right: 10px;
-}
-.pager-cal .previous > a,
-.pager-cal .previous > span {
-  float: left;
-}
-.pager-cal .disabled > a,
-.pager-cal .disabled > a:hover,
-.pager-cal .disabled > a:focus,
-.pager-cal .disabled > span {
-  color: #ffffff;
-  background-color: #18bc9c;
-  cursor: not-allowed;
-}
-
-.pager-cal:before,
-.pager-cal:after {
-  content: " ";
-  display: table;
-}
-
-.pager-cal:after {
-  clear: both;
-}
-
-.pager-cal a,
-.pager-cal a:hover {
-  color: #fff;
-}
-.pager-cal .disabled > a,
-.pager-cal .disabled > a:hover,
-.pager-cal .disabled > a:focus,
-.pager-cal .disabled > span {
-  background-color: #3be6c4;
 }

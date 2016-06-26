@@ -1,24 +1,6 @@
 <h2>上海ディズニーランド 過去の混雑指数</h2>
 <hr>
-<div class="row">
-  <div class="col-lg-6">
-    <ul class="pager">
-      <li class="previous">
-        <%= link_to "<< #{@date.prev_month.month}月", history_sdl_path(year: @date.prev_month.year, month: @date.prev_month.month) %>
-      </li>
-      <li>
-        <h3 style="display: inline"><%= @date.year %>年<%= @date.month %>月</h3>
-      </li>
-      <li class="next">
-        <%= link_to "#{@date.next_month.month}月 >>", history_sdl_path(year: @date.next_month.year, month: @date.next_month.month) %>
-      </li>
-    </ul>
-    <%= render partial: 'calendar' %>
-  </div>
-  <div class="col-lg-6">
-    <%= render partial: 'calendar_index' %>
-  </div>
-</div>
+<%= render partial: 'calendar' %>
 <h3><%= @date.year %>年<%= @date.month %>月<%= @date.day %>日 待ち時間詳細</h3>
 <hr>
 <div class="row">

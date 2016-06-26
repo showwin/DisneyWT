@@ -7,7 +7,7 @@ class HistoriesController < ApplicationController
     @cal_schedule = TdlSchedule.from_to(cal_first_date, cal_last_date)
     @waittimes = TdlPast.waittimes_on(params_date)
     @date = params_date
-    @type = 'tdl'
+    @park = 'tdl'
   end
 
   def tds_index
@@ -15,7 +15,7 @@ class HistoriesController < ApplicationController
     @cal_schedule = TdsSchedule.from_to(cal_first_date, cal_last_date)
     @waittimes = TdsPast.waittimes_on(params_date)
     @date = params_date
-    @type = 'tds'
+    @park = 'tds'
   end
 
   def sdl_index
@@ -23,7 +23,7 @@ class HistoriesController < ApplicationController
     @cal_schedule = SdlSchedule.from_to(cal_first_date, cal_last_date)
     @waittimes = SdlPast.waittimes_on(params_date)
     @date = params_date
-    @type = 'sdl'
+    @park = 'sdl'
   end
 
   def hdl_index
@@ -31,7 +31,7 @@ class HistoriesController < ApplicationController
     @cal_schedule = HdlSchedule.from_to(cal_first_date, cal_last_date)
     @waittimes = HdlPast.waittimes_on(params_date)
     @date = params_date
-    @type = 'hdl'
+    @park = 'hdl'
   end
 
   private

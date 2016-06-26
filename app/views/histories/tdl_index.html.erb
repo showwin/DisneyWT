@@ -1,91 +1,59 @@
 <h2>東京ディズニーランド 過去の混雑指数</h2>
 <hr>
-<div class="row">
-  <div class="col-lg-6">
-    <ul class="pager-cal">
-      <li class="previous">
-        <%= link_to "<<", history_tdl_path(year: @date.prev_year.year, month: @date.prev_year.month) %>
-      </li>
-      <li class="previous">
-        <%= link_to "<", history_tdl_path(year: @date.prev_month.year, month: @date.prev_month.month) %>
-      </li>
-      <li>
-        <h3 style="display: inline"><%= @date.year %>年<%= @date.month %>月</h3>
-      </li>
-      <li class="next">
-        <%= link_to ">>", history_tdl_path(year: @date.next_year.year, month: @date.next_year.month) %>
-      </li>
-      <li class="next">
-        <%= link_to ">", history_tdl_path(year: @date.next_month.year, month: @date.next_month.month) %>
-      </li>
-    </ul>
-    <%= render partial: 'calendar' %>
-  </div>
-  <div class="col-lg-6">
-    <%= render partial: 'calendar_index' %>
-  </div>
-</div>
+<%= render partial: 'calendar' %>
 <h3><%= @date.year %>年<%= @date.month %>月<%= @date.day %>日 待ち時間詳細</h3>
 <hr>
 <div class="row">
-  <table class="table table-waittime-detail table-striped table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th width="5%">時間</th>
-      <th>オ<br>ム<br>ニ<br>バ<br>ス</th>
-      <th>D<br>ギ<br>ャ<br>ラ<br>リ<br>｜</th>
-      <th>ア<br>｜<br>ケ<br>｜<br>ド</th>
-      <th>リ<br>バ<br>｜<br>鉄<br>道</th>
-      <th>カ<br>リ<br>ブ<br>の<br>海<br>賊</th>
-      <th>ジ<br>ャ<br>ン<br>グ<br>ル</th>
-      <th>ツ<br>リ<br>｜<br>ハ<br>ウ<br>ス</th>
-      <th>チ<br>キ<br>ル<br>｜<br>ム</th>
-      <th>ビ<br>ッ<br>グ<br>サ<br>ン<br>ダ<br>｜</th>
-      <th>S<br>ギ<br>ャ<br>ラ<br>リ<br>｜</th>
-      <th>ベ<br>ア<br>シ<br>ア<br>タ<br>｜</th>
-      <th>ト<br>ム<br>ソ<br>｜<br>ヤ<br>い<br>か<br>だ</th>
-      <th>蒸<br>気<br>船</th>
-      <th>ス<br>プ<br>ラ<br>ッ<br>シ<br>ュ</th>
-      <th>カ<br>ヌ<br>｜<br>探<br>検</th>
-      <th>ハ<br>ニ<br>｜<br>ハ<br>ン<br>ト</th>
-      <th>ホ<br>｜<br>ン<br>テ<br>ッ<br>ド</th>
-      <th>ア<br>リ<br>ス</th>
-      <th>ス<br>モ<br>｜<br>ル<br>ワ<br>｜<br>ル<br>ド</th>
-      <th>カ<br>ル<br>｜<br>セ<br>ル</th>
-      <th>シ<br>ン<br>デ<br>レ<br>ラ</th>
-      <th>ピ<br>ノ<br>キ<br>オ</th>
-      <th>ピ<br>｜<br>タ<br>｜<br>パ<br>ン</th>
-      <th>フ<br>ィ<br>ル<br>ハ<br>｜</th>
-      <th>白<br>雪<br>姫</th>
-      <th>空<br>飛<br>ぶ<br>ダ<br>ン<br>ボ</th>
-      <th>ゴ<br>｜<br>コ<br>｜<br>ス<br>タ<br>｜</th>
-      <th>グ<br>｜<br>フ<br>ィ<br>｜</th>
-      <th>C<br>D<br>ツ<br>リ<br>｜<br>ハ<br>ウ<br>ス</th>
-      <th>ド<br>ナ<br>ル<br>ド<br>の<br>ボ<br>｜<br>ト</th>
-      <th>ミ<br>ニ<br>｜<br>の<br>家</th>
-      <th>カ<br>｜<br>ト<br>ゥ<br>｜<br>ン</th>
-      <th>ス<br>タ<br>｜<br>ツ<br>ア<br>｜<br>ズ</th>
-      <th>ス<br>ペ<br>｜<br>ス</th>
-      <th>バ<br>ズ<br>ラ<br>イ<br>ト<br>イ<br>ヤ<br>｜</th>
-      <th>モ<br>ン<br>イ<br>ン</th>
-      <th>レ<br>｜<br>ス<br>ウ<br>ェ<br>イ</th>
-      <th>ス<br>タ<br>｜<br>ジ<br>ェ<br>ッ<br>ト</th>
-      <th>ス<br>テ<br>ィ<br>ッ<br>チ</th>
-      <th>平<br>均<br>待<br>ち<br>時<br>間</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @waittimes.each do |_, waittime| %>
-      <tr>
-        <td><%= period_to_time(waittime['at']).strftime('%H:%M') %></td>
-        <% TDL_ATTRACTIONS.each do |att_id| %>
-          <%= raw display_waittime(waittime[att_id]) %>
+  <div class="col-lg-12 table-responsive">
+    <table class="table table-waittime-detail table-striped table-bordered table-hover table-condensed table-headerfixed">
+      <thead>
+        <tr>
+          <th width="5%">時間</th>
+          <th>リ<br>バ<br>｜<br>鉄<br>道</th>
+          <th>カ<br>リ<br>ブ<br>の<br>海<br>賊</th>
+          <th>ジ<br>ャ<br>ン<br>グ<br>ル</th>
+          <th>ビ<br>ッ<br>グ<br>サ<br>ン<br>ダ<br>｜</th>
+          <th>S<br>ギ<br>ャ<br>ラ<br>リ<br>｜</th>
+          <th>ベ<br>ア<br>シ<br>ア<br>タ<br>｜</th>
+          <th>蒸<br>気<br>船</th>
+          <th>ス<br>プ<br>ラ<br>ッ<br>シ<br>ュ</th>
+          <th>ハ<br>ニ<br>｜<br>ハ<br>ン<br>ト</th>
+          <th>ホ<br>｜<br>ン<br>テ<br>ッ<br>ド</th>
+          <th>ア<br>リ<br>ス</th>
+          <th>ス<br>モ<br>｜<br>ル<br>ワ<br>｜<br>ル<br>ド</th>
+          <th>カ<br>ル<br>｜<br>セ<br>ル</th>
+          <th>シ<br>ン<br>デ<br>レ<br>ラ</th>
+          <th>ピ<br>ノ<br>キ<br>オ</th>
+          <th>ピ<br>｜<br>タ<br>｜<br>パ<br>ン</th>
+          <th>フ<br>ィ<br>ル<br>ハ<br>｜</th>
+          <th>白<br>雪<br>姫</th>
+          <th>空<br>飛<br>ぶ<br>ダ<br>ン<br>ボ</th>
+          <th>ゴ<br>｜<br>コ<br>｜<br>ス<br>タ<br>｜</th>
+          <th>グ<br>｜<br>フ<br>ィ<br>｜</th>
+          <th>カ<br>｜<br>ト<br>ゥ<br>｜<br>ン</th>
+          <th>ス<br>タ<br>｜<br>ツ<br>ア<br>｜<br>ズ</th>
+          <th>ス<br>ペ<br>｜<br>ス</th>
+          <th>バ<br>ズ<br>ラ<br>イ<br>ト<br>イ<br>ヤ<br>｜</th>
+          <th>モ<br>ン<br>イ<br>ン</th>
+          <th>レ<br>｜<br>ス<br>ウ<br>ェ<br>イ</th>
+          <th>ス<br>タ<br>｜<br>ジ<br>ェ<br>ッ<br>ト</th>
+          <th>ス<br>テ<br>ィ<br>ッ<br>チ</th>
+          <th>平<br>均<br>待<br>ち<br>時<br>間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @waittimes.each do |_, waittime| %>
+          <tr>
+            <td><%= period_to_time(waittime['at']).strftime('%H:%M') %></td>
+            <% TDL_ATTRACTIONS.each do |att_id| %>
+              <%= raw display_waittime(waittime[att_id]) %>
+            <% end %>
+            <% ary = waittime.values[1..waittime.values.length].select { |wt| wt >= 0 } %>
+            <% avg = ary.inject(0) {|r,i| r += i} / [ary.length, 1].max %>
+            <%= raw display_waittime(avg) %>
+          </tr>
         <% end %>
-        <% ary = waittime.values[1..waittime.values.length].select { |wt| wt >= 0 } %>
-        <% avg = ary.inject(0) {|r,i| r += i} / [ary.length, 1].max %>
-        <%= raw display_waittime(avg) %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
 </div>

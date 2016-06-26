@@ -1,53 +1,117 @@
-<table class="table table-calendar calendar-bordered calendar-striped calendar-hover ">
-  <thead>
-    <tr>
-      <th>日</th>
-      <th>月</th>
-      <th>火</th>
-      <th>水</th>
-      <th>木</th>
-      <th>金</th>
-      <th>土</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% i = 0 %>
-    <% @cal_jam.each do |date, waittime| %>
-      <% if i % 7 == 0 %>
+<div class="row">
+  <div class="col-lg-6">
+    <ul class="pager-cal">
+      <li class="previous">
+        <a href="/history/<%= @park %>?month=<%= @date.prev_year.month %>&amp;year=<%= @date.prev_year.year %>">&lt;&lt;</a>
+      </li>
+      <li class="previous">
+        <a href="/history/<%= @park %>?month=<%= @date.prev_month.month %>&amp;year=<%= @date.prev_month.year %>">&lt;</a>
+      </li>
+      <li>
+        <h3 class="calendar-title"><%= @date.year %>年<%= @date.month %>月</h3>
+      </li>
+      <li class="next">
+        <a href="/history/<%= @park %>?month=<%= @date.next_year.month %>&amp;year=<%= @date.next_year.year %>">&gt;&gt;</a>
+      </li>
+      <li class="next">
+        <a href="/history/<%= @park %>?month=<%= @date.next_month.month %>&amp;year=<%= @date.next_month.year %>">&gt;</a>
+      </li>
+    </ul>
+    <table class="table table-calendar calendar-bordered calendar-striped calendar-hover ">
+      <thead>
         <tr>
-      <% end %>
-      <td class="calendar">
-        <a class="calendar-day" href="/history/<%= @type %>?day=<%= date.day %>&month=<%= date.month %>&year=<%= date.year %>">
-          <div class="calendar-date">
-            <span><%= date.day %></span>
-            <span class="calendar-schedule"><%= period_to_schedule(@cal_schedule[date][:open_period]) %> - <%= period_to_schedule(@cal_schedule[date][:close_period]) %></span><br>
-          </div>
-          <% if waittime <= CALENDAR_BUSY0 %>
-            <span class="calendar-waittime btn-sm calendar-busy0">ー</span>
-          <% elsif waittime < CALENDAR_BUSY1 %>
-            <span class="calendar-waittime btn-sm calendar-busy1"><%= waittime %></span>
-          <% elsif waittime < CALENDAR_BUSY2 %>
-            <span class="calendar-waittime btn-sm calendar-busy2"><%= waittime %></span>
-          <% elsif waittime < CALENDAR_BUSY3 %>
-            <span class="calendar-waittime btn-sm calendar-busy3"><%= waittime %></span>
-          <% elsif waittime < CALENDAR_BUSY4 %>
-            <span class="calendar-waittime btn-sm calendar-busy4"><%= waittime %></span>
-          <% elsif waittime < CALENDAR_BUSY5 %>
-            <span class="calendar-waittime btn-sm calendar-busy5"><%= waittime %></span>
-          <% elsif waittime < CALENDAR_BUSY6 %>
-            <span class="calendar-waittime btn-sm calendar-busy6"><%= waittime %></span>
-          <% elsif waittime < CALENDAR_BUSY7 %>
-            <span class="calendar-waittime btn-sm calendar-busy7"><%= waittime %></span>
-          <% else %>
-            <span class="calendar-waittime btn-sm calendar-busy8"><%= waittime %></span>
-          <% end %>
-          <!-- <span class="fa fa-cloud calendar-weather"></span> -->
-        </a>
-      </td>
-      <% if i % 7 == 6 %>
+          <th>日</th>
+          <th>月</th>
+          <th>火</th>
+          <th>水</th>
+          <th>木</th>
+          <th>金</th>
+          <th>土</th>
         </tr>
-      <% end %>
-      <% i += 1 %>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+        <% i = 0 %>
+        <% @cal_jam.each do |date, waittime| %>
+          <% if i % 7 == 0 %>
+            <tr>
+          <% end %>
+          <td class="calendar">
+            <a class="calendar-day" href="/history/<%= @park %>?day=<%= date.day %>&month=<%= date.month %>&year=<%= date.year %>">
+              <div class="calendar-date">
+                <span><%= date.day %></span>
+                <span class="calendar-schedule"><%= period_to_schedule(@cal_schedule[date][:open_period]) %> - <%= period_to_schedule(@cal_schedule[date][:close_period]) %></span><br>
+              </div>
+              <% if waittime <= CALENDAR_BUSY0 %>
+                <span class="calendar-waittime btn-sm calendar-busy0">ー</span>
+              <% elsif waittime < CALENDAR_BUSY1 %>
+                <span class="calendar-waittime btn-sm calendar-busy1"><%= waittime %></span>
+              <% elsif waittime < CALENDAR_BUSY2 %>
+                <span class="calendar-waittime btn-sm calendar-busy2"><%= waittime %></span>
+              <% elsif waittime < CALENDAR_BUSY3 %>
+                <span class="calendar-waittime btn-sm calendar-busy3"><%= waittime %></span>
+              <% elsif waittime < CALENDAR_BUSY4 %>
+                <span class="calendar-waittime btn-sm calendar-busy4"><%= waittime %></span>
+              <% elsif waittime < CALENDAR_BUSY5 %>
+                <span class="calendar-waittime btn-sm calendar-busy5"><%= waittime %></span>
+              <% elsif waittime < CALENDAR_BUSY6 %>
+                <span class="calendar-waittime btn-sm calendar-busy6"><%= waittime %></span>
+              <% elsif waittime < CALENDAR_BUSY7 %>
+                <span class="calendar-waittime btn-sm calendar-busy7"><%= waittime %></span>
+              <% else %>
+                <span class="calendar-waittime btn-sm calendar-busy8"><%= waittime %></span>
+              <% end %>
+              <!-- <span class="fa fa-cloud calendar-weather"></span> -->
+            </a>
+          </td>
+          <% if i % 7 == 6 %>
+            </tr>
+          <% end %>
+          <% i += 1 %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-6">
+    <h3>混雑指数</h3>
+    <table class="table">
+      <tbody>
+        <tr class="calendar-index-busy0">
+          <td>-</td>
+          <td>情報なし</td>
+        </tr>
+        <tr class="calendar-index-busy1">
+          <td>0 ~ 14</td>
+          <td>天国</td>
+        </tr>
+        <tr class="calendar-index-busy2">
+          <td>15 ~ 24</td>
+          <td>かなり空いている</td>
+        </tr>
+        <tr class="calendar-index-busy3">
+          <td>25 ~ 34</td>
+          <td>空いている</td>
+        </tr>
+        <tr class="calendar-index-busy4">
+          <td>35 ~ 39</td>
+          <td>ふつう</td>
+        </tr>
+        <tr class="calendar-index-busy5">
+          <td>40 ~ 49</td>
+          <td>少し混んでいる</td>
+        </tr>
+        <tr class="calendar-index-busy6">
+          <td>50 ~ 59</td>
+          <td>混んでいる</td>
+        </tr>
+        <tr class="calendar-index-busy7">
+          <td>60 ~ 69</td>
+          <td>かなり混んでいる</td>
+        </tr>
+        <tr class="calendar-index-busy8">
+          <td>70 ~</td>
+          <td>地獄</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
