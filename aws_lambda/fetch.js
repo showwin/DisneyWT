@@ -86,19 +86,6 @@ exports.handler = function(event, context) {
   var dateJST = new Date(dateUTC.getTime() + 9*3600000);
   var dateCST = new Date(dateUTC.getTime() + 8*3600000);
 
-  // Shanghai Disney Resort
-  var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
-  ShanghaiDR.GetWaitTimes(function(err, data) {
-      if (err) return console.error("Error fetching hanghai Disney Resort wait times: " + err);
-
-      saveWaitTime('sdl_pasts', data, dateCST);
-  });
-  ShanghaiDR.GetOpeningTimes(function(err, data) {
-      if (err) return console.error("Error fetching hanghai Disney Resort schedule: " + err);
-
-      saveSchedule('sdl_schedules', data, 8);
-  });
-
   // Tokyo Disney Land
   var TokyoDL = new DisneyAPI.DisneylandTokyo();
   TokyoDL.GetWaitTimes(function(err, data) {
@@ -123,6 +110,19 @@ exports.handler = function(event, context) {
       if (err) return console.error("Error fetching Tokyo Disney Sea schedule: " + err);
 
       saveSchedule('tds_schedules', data, 9);
+  });
+
+  // Shanghai Disney Resort
+  var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
+  ShanghaiDR.GetWaitTimes(function(err, data) {
+      if (err) return console.error("Error fetching hanghai Disney Resort wait times: " + err);
+
+      saveWaitTime('sdl_pasts', data, dateCST);
+  });
+  ShanghaiDR.GetOpeningTimes(function(err, data) {
+      if (err) return console.error("Error fetching hanghai Disney Resort schedule: " + err);
+
+      saveSchedule('sdl_schedules', data, 8);
   });
 
   // HongKong Disney Land
