@@ -1,54 +1,56 @@
 <h2>東京ディズニーシー 過去の混雑指数</h2>
 <hr>
 <%= render partial: 'calendar' %>
-<h3><%= @date.year %>年<%= @date.month %>月<%= @date.day %>日 待ち時間詳細</h3>
+<h3 id="waittime-detail"><%= @date.year %>年<%= @date.month %>月<%= @date.day %>日 待ち時間詳細</h3>
 <hr>
 <div class="row">
-  <table class="table table-waittime-detail table-striped table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th width="5%">時間</th>
-      <th>船<br>メ<br>デ<br>ィ<br>テ<br>発</th>
-      <th>フ<br>ォ<br>｜<br>ト<br>レ<br>ス</th>
-      <th>ゴ<br>ン<br>ド<br>ラ</th>
-      <th>タ<br>ワ<br>テ<br>ラ</th>
-      <th>ト<br>イ<br>マ<br>ニ</th>
-      <th>タ<br>｜<br>ト<br>ル<br>ト<br>｜<br>ク</th>
-      <th>鉄<br>道<br>ア<br>メ<br>リ<br>カ<br>発</th>
-      <th>船<br>ア<br>メ<br>リ<br>カ<br>発</th>
-      <th>ヴ<br>ィ<br>｜<br>グ<br>ル</th>
-      <th>セ<br>ン<br>タ<br>｜</th>
-      <th>海<br>底<br>2<br>万<br>マ<br>イ<br>ル</th>
-      <th>ア<br>ク<br>ア<br>ト<br>ピ<br>ア</th>
-      <th>鉄<br>道<br>ポ<br>｜<br>ト<br>発</th>
-      <th>イ<br>ン<br>デ<br>ィ<br>｜</th>
-      <th>レ<br>イ<br>ジ<br>ン<br>グ</th>
-      <th>船<br>ロ<br>ス<br>ト<br>発</th>
-      <th>マ<br>｜<br>メ<br>イ<br>ド</th>
-      <th>ジ<br>ャ<br>ン<br>ピ<br>ン</th>
-      <th>ス<br>カ<br>ッ<br>ト<br>ル</th>
-      <th>フ<br>ラ<br>ン<br>ダ<br>｜</th>
-      <th>バ<br>ル<br>｜<br>ン<br>レ<br>｜<br>ス</th>
-      <th>ワ<br>｜<br>ル<br>プ<br>｜<br>ル</th>
-      <th>マ<br>ジ<br>ッ<br>ク<br>ラ<br>ン<br>プ</th>
-      <th>カ<br>ル<br>｜<br>セ<br>ル</th>
-      <th>シ<br>ン<br>ド<br>バ<br>ッ<br>ド</th>
-      <th>ジ<br>ャ<br>ス<br>ミ<br>ン</th>
-      <th>平<br>均<br>待<br>ち<br>時<br>間</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @waittimes.each do |_, waittime| %>
-      <tr>
-        <td><%= period_to_time(waittime['at']).strftime('%H:%M') %></td>
-        <% TDS_ATTRACTIONS.each do |att_id| %>
-          <%= raw display_waittime(waittime[att_id]) %>
+  <div class="col-lg-12 table-responsive">
+    <table class="table table-waittime-detail table-striped table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th width="5%">時間</th>
+          <th>船<br>メ<br>デ<br>ィ<br>テ<br>発</th>
+          <th>フ<br>ォ<br>｜<br>ト<br>レ<br>ス</th>
+          <th>ゴ<br>ン<br>ド<br>ラ</th>
+          <th>タ<br>ワ<br>テ<br>ラ</th>
+          <th>ト<br>イ<br>マ<br>ニ</th>
+          <th>タ<br>｜<br>ト<br>ル<br>ト<br>｜<br>ク</th>
+          <th>鉄<br>道<br>ア<br>メ<br>リ<br>カ<br>発</th>
+          <th>船<br>ア<br>メ<br>リ<br>カ<br>発</th>
+          <th>ヴ<br>ィ<br>｜<br>グ<br>ル</th>
+          <th>セ<br>ン<br>タ<br>｜</th>
+          <th>海<br>底<br>2<br>万<br>マ<br>イ<br>ル</th>
+          <th>ア<br>ク<br>ア<br>ト<br>ピ<br>ア</th>
+          <th>鉄<br>道<br>ポ<br>｜<br>ト<br>発</th>
+          <th>イ<br>ン<br>デ<br>ィ<br>｜</th>
+          <th>レ<br>イ<br>ジ<br>ン<br>グ</th>
+          <th>船<br>ロ<br>ス<br>ト<br>発</th>
+          <th>マ<br>｜<br>メ<br>イ<br>ド</th>
+          <th>ジ<br>ャ<br>ン<br>ピ<br>ン</th>
+          <th>ス<br>カ<br>ッ<br>ト<br>ル</th>
+          <th>フ<br>ラ<br>ン<br>ダ<br>｜</th>
+          <th>バ<br>ル<br>｜<br>ン<br>レ<br>｜<br>ス</th>
+          <th>ワ<br>｜<br>ル<br>プ<br>｜<br>ル</th>
+          <th>マ<br>ジ<br>ッ<br>ク<br>ラ<br>ン<br>プ</th>
+          <th>カ<br>ル<br>｜<br>セ<br>ル</th>
+          <th>シ<br>ン<br>ド<br>バ<br>ッ<br>ド</th>
+          <th>ジ<br>ャ<br>ス<br>ミ<br>ン</th>
+          <th>平<br>均<br>待<br>ち<br>時<br>間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @waittimes.each do |_, waittime| %>
+          <tr>
+            <td><%= period_to_time(waittime['at']).strftime('%H:%M') %></td>
+            <% TDS_ATTRACTIONS.each do |att_id| %>
+              <%= raw display_waittime(waittime[att_id]) %>
+            <% end %>
+            <% ary = waittime.values[1..waittime.values.length].select { |wt| wt >= 0 } %>
+            <% avg = ary.inject(0) {|r,i| r += i} / [ary.length, 1].max %>
+            <%= raw display_waittime(avg) %>
+          </tr>
         <% end %>
-        <% ary = waittime.values[1..waittime.values.length].select { |wt| wt >= 0 } %>
-        <% avg = ary.inject(0) {|r,i| r += i} / [ary.length, 1].max %>
-        <%= raw display_waittime(avg) %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
 </div>

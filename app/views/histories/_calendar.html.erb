@@ -36,7 +36,7 @@
             <tr>
           <% end %>
           <td class="calendar">
-            <a class="calendar-day" href="/history/<%= @park %>?day=<%= date.day %>&month=<%= date.month %>&year=<%= date.year %>">
+            <a class="calendar-day" href="/history/<%= @park %>?day=<%= date.day %>&month=<%= date.month %>&year=<%= date.year %>#waittime-detail">
               <div class="calendar-date">
                 <span><%= date.day %></span>
                 <span class="calendar-schedule"><%= period_to_schedule(@cal_schedule[date][:open_period]) %> - <%= period_to_schedule(@cal_schedule[date][:close_period]) %></span><br>

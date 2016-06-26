@@ -1,47 +1,49 @@
 <h2>上海ディズニーランド 過去の混雑指数</h2>
 <hr>
 <%= render partial: 'calendar' %>
-<h3><%= @date.year %>年<%= @date.month %>月<%= @date.day %>日 待ち時間詳細</h3>
+<h3 id="waittime-detail"><%= @date.year %>年<%= @date.month %>月<%= @date.day %>日 待ち時間詳細</h3>
 <hr>
 <div class="row">
-  <table class="table table-waittime-detail table-striped table-bordered table-hover table-condensed">
-  <thead>
-    <tr>
-      <th width="5%">時間</th>
-      <th>ト<br>ロ<br>ン</th>
-      <th>ロ<br>ア<br>リ<br>ン<br>グ<br>ラ<br>ピ<br>ッ<br>ド</th>
-      <th>ワ<br>ン<br>ス<br>ア<br>ポ<br>ン</th>
-      <th>ア<br>リ<br>ス<br>メ<br>イ<br>ズ</th>
-      <th>ハ<br>ニ<br>｜<br>ポ<br>ッ<br>ト</th>
-      <th>ピ<br>｜<br>タ<br>｜<br>パ<br>ン</th>
-      <th>マ<br>イ<br>ン<br>ト<br>レ<br>イ<br>ン</th>
-      <th>プ<br>｜<br>さ<br>ん<br>の<br>冒<br>険</th>
-      <th>ク<br>リ<br>ス<br>タ<br>ル<br>グ<br>ロ<br>ッ<br>ト</th>
-      <th>空<br>飛<br>ぶ<br>ダ<br>ン<br>ボ</th>
-      <th>カ<br>ル<br>｜<br>セ<br>ル</th>
-      <th>カ<br>ヌ<br>｜</th>
-      <th>カ<br>リ<br>ブ<br>の<br>海<br>賊</th>
-      <th>シ<br>ッ<br>プ<br>レ<br>ッ<br>ク<br>シ<br>ョ<br>ア</th>
-      <th>セ<br>イ<br>レ<br>｜<br>ン<br>の<br>復<br>習<br>号</th>
-      <th>バ<br>ズ<br>ラ<br>イ<br>ト<br>イ<br>ヤ<br>｜</th>
-      <th>ジ<br>ェ<br>ッ<br>ト<br>パ<br>ッ<br>ク</th>
-      <th>ス<br>テ<br>ィ<br>ッ<br>チ</th>
-      <th>ソ<br>ア<br>リ<br>ン</th>
-      <th>平<br>均<br>待<br>ち<br>時<br>間</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @waittimes.each do |_, waittime| %>
-      <tr>
-        <td><%= period_to_time(waittime['at']).strftime('%H:%M') %></td>
-        <% SDL_ATTRACTIONS.each do |att_id| %>
-          <%= raw display_waittime(waittime[att_id]) %>
+  <div class="col-lg-12 table-responsive">
+    <table class="table table-waittime-detail table-striped table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th width="5%">時間</th>
+          <th>ト<br>ロ<br>ン</th>
+          <th>ロ<br>ア<br>リ<br>ン<br>グ<br>ラ<br>ピ<br>ッ<br>ド</th>
+          <th>ワ<br>ン<br>ス<br>ア<br>ポ<br>ン</th>
+          <th>ア<br>リ<br>ス<br>メ<br>イ<br>ズ</th>
+          <th>ハ<br>ニ<br>｜<br>ポ<br>ッ<br>ト</th>
+          <th>ピ<br>｜<br>タ<br>｜<br>パ<br>ン</th>
+          <th>マ<br>イ<br>ン<br>ト<br>レ<br>イ<br>ン</th>
+          <th>プ<br>｜<br>さ<br>ん<br>の<br>冒<br>険</th>
+          <th>ク<br>リ<br>ス<br>タ<br>ル<br>グ<br>ロ<br>ッ<br>ト</th>
+          <th>空<br>飛<br>ぶ<br>ダ<br>ン<br>ボ</th>
+          <th>カ<br>ル<br>｜<br>セ<br>ル</th>
+          <th>カ<br>ヌ<br>｜</th>
+          <th>カ<br>リ<br>ブ<br>の<br>海<br>賊</th>
+          <th>シ<br>ッ<br>プ<br>レ<br>ッ<br>ク<br>シ<br>ョ<br>ア</th>
+          <th>セ<br>イ<br>レ<br>｜<br>ン<br>の<br>復<br>習<br>号</th>
+          <th>バ<br>ズ<br>ラ<br>イ<br>ト<br>イ<br>ヤ<br>｜</th>
+          <th>ジ<br>ェ<br>ッ<br>ト<br>パ<br>ッ<br>ク</th>
+          <th>ス<br>テ<br>ィ<br>ッ<br>チ</th>
+          <th>ソ<br>ア<br>リ<br>ン</th>
+          <th>平<br>均<br>待<br>ち<br>時<br>間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @waittimes.each do |_, waittime| %>
+          <tr>
+            <td><%= period_to_time(waittime['at']).strftime('%H:%M') %></td>
+            <% SDL_ATTRACTIONS.each do |att_id| %>
+              <%= raw display_waittime(waittime[att_id]) %>
+            <% end %>
+            <% ary = waittime.values[1..waittime.values.length].select { |wt| wt >= 0 } %>
+            <% avg = ary.inject(0) {|r,i| r += i} / [ary.length, 1].max %>
+            <%= raw display_waittime(avg) %>
+          </tr>
         <% end %>
-        <% ary = waittime.values[1..waittime.values.length].select { |wt| wt >= 0 } %>
-        <% avg = ary.inject(0) {|r,i| r += i} / [ary.length, 1].max %>
-        <%= raw display_waittime(avg) %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
 </div>
