@@ -29,7 +29,7 @@ class SdlPast < ActiveRecord::Base
       # }]
       result = {}
       s = SdlSchedule.find_by(date: date)
-      s.open_period.upto(s.close_period) do |period|
+      s.open_period.upto(s.close_period - 1) do |period|
         result[period] = { 'at' => period }
       end
       SdlPast.where(date: date).find_each do |tp|

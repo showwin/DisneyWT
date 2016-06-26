@@ -29,7 +29,7 @@ class HdlPast < ActiveRecord::Base
       # }]
       result = {}
       s = HdlSchedule.find_by(date: date)
-      s.open_period.upto(s.close_period) do |period|
+      s.open_period.upto(s.close_period - 1) do |period|
         result[period] = { 'at' => period }
       end
       HdlPast.where(date: date).find_each do |tp|
