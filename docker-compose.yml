@@ -1,0 +1,30 @@
+mysql:
+  environment:
+    - MYSQL_ROOT_PASSWORD=docker
+    - MYSQL_PASSWORD=docker
+    - MYSQL_USER=docker
+    - MYSQL_DATABASE=disneywt_development
+  build: ./docker/mysql
+
+redis:
+  build: ./docker/redis
+
+rails:
+  build: .
+  command: 'docker/rails/start_server.sh'
+  ports:
+    - "3000:3000"
+  links:
+    - mysql
+    - redis
+  environment:
+    - DISNEYWT_DATABASE_USERNAME=root
+    - DISNEYWT_DATABASE_PASSWORD=docker
+    - DISNEYWT_DATABASE_HOST=mysql
+  volumes_from:
+    - bundle
+
+bundle:
+  image: busybox
+  volumes:
+    - /bundle
