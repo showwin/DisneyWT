@@ -1,0 +1,30 @@
+TDL0:
+  method: "GET"
+  url: "http://disney.showwin.asia/"
+TDL1:
+  method: "GET"
+  url: "http://disney.showwin.asia/history/tdl?month=6&year=2016"
+TDL2:
+  method: "GET"
+  url: "http://disney.showwin.asia/"
+TDL3:
+  method: "GET"
+  url: "http://disney.showwin.asia/history/tdl?month=6&year=2015"
+TDL4:
+  method: "GET"
+  url: "http://disney.showwin.asia/"
+SDL0:
+  method: "GET"
+  url: "http://disney.showwin.asia/history/sdl"
+SDL1:
+  method: "GET"
+  url: "http://disney.showwin.asia/history/sdl?month=6&year=2016"
+SDL2:
+  method: "GET"
+  url: "http://disney.showwin.asia/history/sdl"
+SDL3:
+  method: "GET"
+  url: "http://disney.showwin.asia/history/sdl?month=6&year=2015"
+SDL4:
+  method: "GET"
+  url: "http://disney.showwin.asia/history/sdl"
