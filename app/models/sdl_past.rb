@@ -1,5 +1,7 @@
 # Shanghai Disney Land Past
 class SdlPast < ActiveRecord::Base
+  include RedisStore
+
   def waittime_with_status
     status ? waittime : -1
   end
@@ -11,6 +13,8 @@ class SdlPast < ActiveRecord::Base
       #   Wed, 01 Jun 2016 => 15,  # date => waittime
       #   Thu, 02 Jun 2016 => 30,
       # }
+      cached = restore_calendar(SDL_STRING, begin_date, end_date)
+      return cached if cached
       record = SdlPast.where(status: true).where(name: SDL_MAIN_ATTRACTIONS)
                       .where('21 <= period AND period <= 40')
                       .where('? <= date AND date <= ?', begin_date, end_date)
@@ -18,6 +22,7 @@ class SdlPast < ActiveRecord::Base
       result = {}
       (begin_date..end_date).each { |date| result[date] = 0 }
       record.each { |r| result[r.date] = r.waittime }
+      store_calendar(SDL_STRING, begin_date, end_date, result)
       result
     end
 

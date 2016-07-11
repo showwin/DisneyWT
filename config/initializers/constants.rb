@@ -1,3 +1,10 @@
+# 各パークの文字列
+TDL_STRING = 'tdl'
+TDS_STRING = 'tds'
+SDL_STRING = 'sdl'
+HDL_STRING = 'hdl'
+
+# 表示するアトラクション
 TDL_ATTRACTIONS = %w(al_western al_carib al_jungle wl_mountain wl_gallery wl_country wl_mark cc_splash fl_pooh fl_haunted fl_alice fl_small fl_castle fl_cinderella fl_pinocchio fl_peter fl_philhar fl_snow fl_dumbo tt_gadget tt_goofy tt_rabbit tl_tours tl_mountain tl_buzz tl_monster tl_grand tl_jets stitch)
 TDS_ATTRACTIONS = %w(mh_transit mh_fortress mh_gondolas aw_tot aw_toy aw_turtle aw_railway aw_transit aw_big mi_center mi_20000 pd_aqua pd_railway ld_indiana ld_raging ld_transit ml_theater ml_jelly ml_scuttle ml_flounder ml_balloon ml_pool ac_magic ac_caravan ac_sindbad ac_jasmine)
 SDL_ATTRACTIONS = %w(attRoaringRapids attSoaringOverHorizon attAliceWonderlandMaze attHunnyPotSpin attAdventuresWinniePooh attOnceUponTimeAdventure attPeterPansFlight attSevenDwarfsMineTrain attVoyageToCrystalGrotto attDumboFlyingElephant attFantasiaCarousel attBuzzLightyearPlanetRescue attJetPacks attStitchEncounter attTronLightcyclePowerRun attExplorerCanoes attPiratesOfCaribbean attShipwreckShore attSirensRevenge)

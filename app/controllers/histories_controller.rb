@@ -7,9 +7,7 @@ class HistoriesController < ApplicationController
     @cal_schedule = TdlSchedule.from_to(cal_first_date, cal_last_date)
     @waittimes = TdlPast.waittimes_on(params_date)
     @date = params_date
-    @park = 'tdl'
-    REDIS.set("mykey", "hello world")
-    @message = REDIS.get("mykey")
+    @park = TDL_STRING
   end
 
   def tds_index
@@ -17,7 +15,7 @@ class HistoriesController < ApplicationController
     @cal_schedule = TdsSchedule.from_to(cal_first_date, cal_last_date)
     @waittimes = TdsPast.waittimes_on(params_date)
     @date = params_date
-    @park = 'tds'
+    @park = TDS_STRING
   end
 
   def sdl_index
@@ -25,7 +23,7 @@ class HistoriesController < ApplicationController
     @cal_schedule = SdlSchedule.from_to(cal_first_date, cal_last_date)
     @waittimes = SdlPast.waittimes_on(params_date)
     @date = params_date
-    @park = 'sdl'
+    @park = SDL_STRING
   end
 
   def hdl_index
@@ -33,7 +31,7 @@ class HistoriesController < ApplicationController
     @cal_schedule = HdlSchedule.from_to(cal_first_date, cal_last_date)
     @waittimes = HdlPast.waittimes_on(params_date)
     @date = params_date
-    @park = 'hdl'
+    @park = HDL_STRING
   end
 
   private
