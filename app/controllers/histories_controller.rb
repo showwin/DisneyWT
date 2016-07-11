@@ -8,6 +8,8 @@ class HistoriesController < ApplicationController
     @waittimes = TdlPast.waittimes_on(params_date)
     @date = params_date
     @park = 'tdl'
+    REDIS.set("mykey", "hello world")
+    @message = REDIS.get("mykey")
   end
 
   def tds_index

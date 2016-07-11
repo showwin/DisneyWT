@@ -11,6 +11,8 @@ class TdlPast < ActiveRecord::Base
       #   Wed, 01 Jun 2016 => 15,  # date => waittime
       #   Thu, 02 Jun 2016 => 30,
       # }
+      cache = REDIS.get("TDL#{begin_date}#{end_date}AVG")
+      return restore_from(cache) if cache
       record = TdlPast.where(status: true).where(name: TDL_MAIN_ATTRACTIONS)
                       .where('21 <= period AND period <= 40')
                       .where('? <= date AND date <= ?', begin_date, end_date)
@@ -18,7 +20,20 @@ class TdlPast < ActiveRecord::Base
       result = {}
       (begin_date..end_date).each { |date| result[date] = 0 }
       record.each { |r| result[r.date] = r.waittime }
+      store_to_cache(begin_date, end_date, result)
       result
+    end
+
+    def restore_from(cache)
+      JSON.parse(cache).map { |k, v| [Date.parse(k), v] }.to_h
+    end
+
+    def store_to_cache(begin_date, end_date, result)
+      key = "TDL#{begin_date}#{end_date}AVG"
+      future = Time.zone.today <= end_date
+      seconds = future ? SHORT_EXPIRE_SECONDS : LONG_EXPIRE_SECONDS
+      REDIS.set(key, result.to_json)
+      REDIS.expire(key, seconds)
     end
 
     def waittimes_on(date)

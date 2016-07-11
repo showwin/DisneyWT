@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 gem 'mysql2'
@@ -14,6 +13,7 @@ gem 'unicorn'
 gem 'therubyracer', platforms: :ruby
 gem 'google-analytics-rails', '1.1.0'
 gem 'rack-user_agent'
+gem 'redis'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

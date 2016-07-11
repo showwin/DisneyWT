@@ -161,6 +161,7 @@ GEM
     rake (11.2.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    redis (3.3.0)
     ref (2.0.0)
     rspec-core (3.0.4)
       rspec-support (~> 3.0.0)
@@ -245,6 +246,7 @@ DEPENDENCIES
   mysql2
   rack-user_agent
   rails (= 4.2.6)
+  redis
   rspec-rails (~> 3.0.0)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

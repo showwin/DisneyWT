@@ -12,6 +12,8 @@ redis:
 rails:
   build: .
   command: 'docker/rails/start_server.sh'
+  volumes:
+    - .:/app
   ports:
     - "3000:3000"
   links:
@@ -21,6 +23,9 @@ rails:
     - DISNEYWT_DATABASE_USERNAME=root
     - DISNEYWT_DATABASE_PASSWORD=docker
     - DISNEYWT_DATABASE_HOST=mysql
+    - DISNEYWT_REDIS_HOST=redis
+    - DISNEYWT_REDIS_PORT=6379
+    - DISNEYWT_REDIS_PASSWORD=docker
   volumes_from:
     - bundle
 
