@@ -1,0 +1,7 @@
+# before Redis Cache
+▶ hakari -s scripts/hakari_prd.yml -w 10 -d 60                                                master@DisneyWT
+TDL0
+	200: xxx req, about 500 ms/req
+
+SDL0
+	200: xxx req, about 350 ms/req
