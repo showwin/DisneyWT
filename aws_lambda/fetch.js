@@ -6,6 +6,7 @@
 var DisneyAPI = require("wdwjs");
 var mysql = require('mysql');
 var config = require('config');
+var async = require('async');
 
 function timeToPeriod(hours, minutes) {
   /*
@@ -113,12 +114,22 @@ exports.handler = function(event, context) {
   });
 
   // Shanghai Disney Resort
+  // retry until fetch all attractions waittime, because often fails.
   var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
-  ShanghaiDR.GetWaitTimes(function(err, data) {
+  var get_all = false;
+  async.whilst(function() {
+    return !get_all;
+  }, function(callback) {
+    ShanghaiDR.GetWaitTimes(function(err, data) {
       if (err) return console.error("Error fetching hanghai Disney Resort wait times: " + err);
-
-      saveWaitTime('sdl_pasts', data, dateCST);
+      if (data.length >= 22) get_all = true;
+      if (get_all) saveWaitTime('sdl_pasts', data, dateCST);
+      setTimeout(function() {
+        callback();
+      }, 1000);
+    });
   });
+
   ShanghaiDR.GetOpeningTimes(function(err, data) {
       if (err) return console.error("Error fetching hanghai Disney Resort schedule: " + err);
 
