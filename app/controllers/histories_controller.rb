@@ -62,7 +62,7 @@ class HistoriesController < ApplicationController
   def params_date
     year = params[:year] || Time.zone.today.year
     month = params[:month] || Time.zone.today.month
-    day = params[:day] || Time.zone.today.day
+    day = params[:day] || 1
     Date.new(year.to_i, month.to_i, day.to_i)
   end
 
