@@ -127,22 +127,22 @@ exports.handler = function(event, context) {
   });
 
 
+  // Shanghai Disney Resort
+  var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
   ShanghaiDR.GetOpeningTimes(function(err, data) {
       if (err) return console.error("Error fetching Shanghai Disney Resort schedule: " + err);
 
       saveSchedule('sdl_schedules', data, 8);
   });
 
-  // Shanghai Disney Resort
   // retry until fetch all attractions waittime, because often fails.
-  var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
   var get_all = false;
   async.whilst(function() {
     return !get_all;
   }, function(callback) {
     ShanghaiDR.GetWaitTimes(function(err, data) {
       if (err) return console.error("Error fetching Shanghai Disney Resort wait times: " + err);
-      if (data.length >= 22) get_all = true;
+      if (data.length >= 20) get_all = true;
       if (get_all) saveWaitTime('sdl_pasts', data, dateCST);
       setTimeout(function() {
         console.info("Retry getting waittime for Shanghai Disney Resort");
