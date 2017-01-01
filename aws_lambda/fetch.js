@@ -113,29 +113,6 @@ exports.handler = function(event, context) {
       saveSchedule('tds_schedules', data, 9);
   });
 
-  // Shanghai Disney Resort
-  // retry until fetch all attractions waittime, because often fails.
-  var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
-  var get_all = false;
-  async.whilst(function() {
-    return !get_all;
-  }, function(callback) {
-    ShanghaiDR.GetWaitTimes(function(err, data) {
-      if (err) return console.error("Error fetching hanghai Disney Resort wait times: " + err);
-      if (data.length >= 22) get_all = true;
-      if (get_all) saveWaitTime('sdl_pasts', data, dateCST);
-      setTimeout(function() {
-        callback();
-      }, 1000);
-    });
-  });
-
-  ShanghaiDR.GetOpeningTimes(function(err, data) {
-      if (err) return console.error("Error fetching hanghai Disney Resort schedule: " + err);
-
-      saveSchedule('sdl_schedules', data, 8);
-  });
-
   // HongKong Disney Land
   var HongKongDL = new DisneyAPI.DisneylandHongKong();
   HongKongDL.GetWaitTimes(function(err, data) {
@@ -147,5 +124,30 @@ exports.handler = function(event, context) {
       if (err) return console.error("Error fetching HongKong Disney Land schedule: " + err);
 
       saveSchedule('hdl_schedules', data, 8);
+  });
+
+
+  ShanghaiDR.GetOpeningTimes(function(err, data) {
+      if (err) return console.error("Error fetching Shanghai Disney Resort schedule: " + err);
+
+      saveSchedule('sdl_schedules', data, 8);
+  });
+
+  // Shanghai Disney Resort
+  // retry until fetch all attractions waittime, because often fails.
+  var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
+  var get_all = false;
+  async.whilst(function() {
+    return !get_all;
+  }, function(callback) {
+    ShanghaiDR.GetWaitTimes(function(err, data) {
+      if (err) return console.error("Error fetching Shanghai Disney Resort wait times: " + err);
+      if (data.length >= 22) get_all = true;
+      if (get_all) saveWaitTime('sdl_pasts', data, dateCST);
+      setTimeout(function() {
+        console.info("Retry getting waittime for Shanghai Disney Resort");
+        callback();
+      }, 1000);
+    });
   });
 };
