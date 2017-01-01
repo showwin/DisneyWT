@@ -10,11 +10,15 @@ module RedisStore
       seconds = future ? SHORT_EXPIRE_SECONDS : LONG_EXPIRE_SECONDS
       REDIS.set(key, result.to_json)
       REDIS.expire(key, seconds)
+    rescue
+      nil
     end
 
     def restore_calendar(park, begin_date, end_date)
       cache = REDIS.get("#{park}#{begin_date}#{end_date}AVG")
       JSON.parse(cache).map { |k, v| [Date.parse(k), v] }.to_h if cache
+    rescue
+      nil
     end
   end
 end
