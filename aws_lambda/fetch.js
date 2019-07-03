@@ -3,7 +3,7 @@
 */
 
 // Setup
-var DisneyAPI = require("wdwjs");
+const Themeparks = require("themeparks");
 var mysql = require('mysql');
 var config = require('config');
 var async = require('async');
@@ -43,8 +43,9 @@ function saveWaitTime(table, data, date) {
       fastpass = fpStatus.substr(18);
     }
     var waittime = Math.max(data[i]['waitTime'], 0);
+    var id = data[i]['id'].split('_')[1]  // 'TokyoDisneyResortMagicKingdom_34' のような形式
 
-    query = 'INSERT INTO '+table+' (name, waittime, status, fastpass, date, period) VALUES ("'+data[i]['id']+'",'+waittime+','+data[i]['active']+',"'+fastpass+'","'+today+'",'+period+')';
+    query = 'INSERT INTO '+table+' (name, waittime, status, fastpass, date, period) VALUES ("'+id+'",'+waittime+','+data[i]['active']+',"'+fastpass+'","'+today+'",'+period+')';
     //console.log(query);
     connection.query(query, function(err, _, _) {
       if (err) console.log(err);
@@ -88,39 +89,42 @@ exports.handler = function(event, context) {
   var dateCST = new Date(dateUTC.getTime() + 8*3600000);
 
   // Tokyo Disney Land
-  var TokyoDL = new DisneyAPI.DisneylandTokyo();
-  TokyoDL.GetWaitTimes(function(err, data) {
-      if (err) return console.error("Error fetching Tokyo Disney Land wait times: " + err);
-
-      saveWaitTime('tdl_pasts', data, dateJST);
+  const TokyoDL = new Themeparks.Parks.TokyoDisneyResortMagicKingdom();
+  TokyoDL.GetWaitTimes().then((data) => {
+    saveWaitTime('tdl_pasts', data, dateJST);
+  }).catch((err) => {
+    console.error("Error fetching Tokyo Disney Land wait times: " + err);
   });
-  TokyoDL.GetOpeningTimes(function(err, data) {
-      if (err) return console.error("Error fetching Tokyo Disney Land schedule: " + err);
 
+    saveWaitTime('tdl_pasts', data, dateJST);
+  });
+  TokyoDL.GetOpeningTimes((err, data) => {
       saveSchedule('tdl_schedules', data, 9);
+  }).catch((err) => {
+      console.error("Error fetching Tokyo Disney Land schedule: " + err);
   });
 
   // Tokyo Disney Sea
-  var TokyoDS = new DisneyAPI.DisneySeaTokyo();
-  TokyoDS.GetWaitTimes(function(err, data) {
+  var TokyoDS = new Themeparks.Parks.TokyoDisneyResortDisneySea();
+  TokyoDS.GetWaitTimes((err, data) => {
       if (err) return console.error("Error fetching Tokyo Disney Sea wait times: " + err);
 
       saveWaitTime('tds_pasts', data, dateJST);
   });
-  TokyoDS.GetOpeningTimes(function(err, data) {
+  TokyoDS.GetOpeningTimes((err, data) => {
       if (err) return console.error("Error fetching Tokyo Disney Sea schedule: " + err);
 
       saveSchedule('tds_schedules', data, 9);
   });
 
   // HongKong Disney Land
-  var HongKongDL = new DisneyAPI.DisneylandHongKong();
-  HongKongDL.GetWaitTimes(function(err, data) {
+  var HongKongDL = new Themeparks.Parks.HongKongDisneyland();
+  HongKongDL.GetWaitTimes((err, data) => {
       if (err) return console.error("Error fetching HongKong Disney Land wait times: " + err);
 
       saveWaitTime('hdl_pasts', data, dateCST);
   });
-  HongKongDL.GetOpeningTimes(function(err, data) {
+  HongKongDL.GetOpeningTimes((err, data) => {
       if (err) return console.error("Error fetching HongKong Disney Land schedule: " + err);
 
       saveSchedule('hdl_schedules', data, 8);
@@ -128,8 +132,8 @@ exports.handler = function(event, context) {
 
 
   // Shanghai Disney Resort
-  var ShanghaiDR = new DisneyAPI.ShanghaiDisneyResort();
-  ShanghaiDR.GetOpeningTimes(function(err, data) {
+  var ShanghaiDR = new Themeparks.Parks.ShanghaiDisneyResortMagicKingdom();
+  ShanghaiDR.GetOpeningTimes((err, data) => {
       if (err) return console.error("Error fetching Shanghai Disney Resort schedule: " + err);
 
       saveSchedule('sdl_schedules', data, 8);
@@ -140,7 +144,7 @@ exports.handler = function(event, context) {
   async.whilst(function() {
     return !get_all;
   }, function(callback) {
-    ShanghaiDR.GetWaitTimes(function(err, data) {
+    ShanghaiDR.GetWaitTimes((err, data) => {
       if (err) return console.error("Error fetching Shanghai Disney Resort wait times: " + err);
       if (data.length >= 20) get_all = true;
       if (get_all) saveWaitTime('sdl_pasts', data, dateCST);
