@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  deploy:
+    working_directory: ~/DisneyWT
+    docker:
+      - image: circleci/ruby:2.2.4
+        environment:
+          RAILS_ENV: test
+    steps:
+      - checkout
+      - run:
+          name: setup ssh
+          command: |
+            cp config/ssh_config ~/.ssh/config
+            chmod 600 ~/.ssh/config
+      - restore_cache:
+          keys:
+            - gem-cache-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: bundle install
+          command: |
+           bundle install --path vendor/bundle
+      - save_cache:
+          key: gem-cache-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: deploy
+          command: bash ./scripts/deploy.sh
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - release

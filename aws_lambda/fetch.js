@@ -96,9 +96,8 @@ exports.handler = function(event, context) {
     console.error("Error fetching Tokyo Disney Land wait times: " + err);
   });
 
-    saveWaitTime('tdl_pasts', data, dateJST);
   });
-  TokyoDL.GetOpeningTimes((err, data) => {
+  TokyoDL.GetOpeningTimes().then((data) => {
       saveSchedule('tdl_schedules', data, 9);
   }).catch((err) => {
       console.error("Error fetching Tokyo Disney Land schedule: " + err);
@@ -106,10 +105,10 @@ exports.handler = function(event, context) {
 
   // Tokyo Disney Sea
   var TokyoDS = new Themeparks.Parks.TokyoDisneyResortDisneySea();
-  TokyoDS.GetWaitTimes((err, data) => {
-      if (err) return console.error("Error fetching Tokyo Disney Sea wait times: " + err);
-
-      saveWaitTime('tds_pasts', data, dateJST);
+  TokyoDS.GetWaitTimes().then((data) => {
+    saveWaitTime('tds_pasts', data, dateJST);
+  }).catch((err) => {
+    console.error("Error fetching Tokyo Disney Sea wait times: " + err);
   });
   TokyoDS.GetOpeningTimes((err, data) => {
       if (err) return console.error("Error fetching Tokyo Disney Sea schedule: " + err);
