@@ -13,6 +13,10 @@ jobs:
           command: |
             cp config/ssh_config ~/.ssh/config
             chmod 600 ~/.ssh/config
+      - run:
+          name: Install System Dependencies
+          command: sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+
       - restore_cache:
           keys:
             - gem-cache-{{ checksum "Gemfile.lock" }}

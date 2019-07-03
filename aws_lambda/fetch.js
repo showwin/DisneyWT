@@ -110,25 +110,24 @@ exports.handler = function(event, context) {
   }).catch((err) => {
     console.error("Error fetching Tokyo Disney Sea wait times: " + err);
   });
-  TokyoDS.GetOpeningTimes((err, data) => {
-      if (err) return console.error("Error fetching Tokyo Disney Sea schedule: " + err);
-
-      saveSchedule('tds_schedules', data, 9);
+  TokyoDS.GetOpeningTimes().then((data) => {
+    saveSchedule('tds_schedules', data, 9);
+  }).catch((err) => {
+      console.error("Error fetching Tokyo Disney Sea schedule: " + err);
   });
 
   // HongKong Disney Land
   var HongKongDL = new Themeparks.Parks.HongKongDisneyland();
-  HongKongDL.GetWaitTimes((err, data) => {
-      if (err) return console.error("Error fetching HongKong Disney Land wait times: " + err);
-
-      saveWaitTime('hdl_pasts', data, dateCST);
+  HongKongDL.GetWaitTimes().then((data) => {
+    saveWaitTime('hdl_pasts', data, dateCST);
+  }).catch((err) => {
+    console.error("Error fetching HongKong Disney Land wait times: " + err);
   });
-  HongKongDL.GetOpeningTimes((err, data) => {
-      if (err) return console.error("Error fetching HongKong Disney Land schedule: " + err);
-
-      saveSchedule('hdl_schedules', data, 8);
+  HongKongDL.GetOpeningTimes().then((data) => {
+    saveSchedule('hdl_schedules', data, 8);
+  }).catch((err) => {
+      console.error("Error fetching HongKong Disney Land schedule: " + err);
   });
-
 
   // Shanghai Disney Resort
   var ShanghaiDR = new Themeparks.Parks.ShanghaiDisneyResortMagicKingdom();
