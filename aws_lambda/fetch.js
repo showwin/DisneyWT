@@ -131,10 +131,10 @@ exports.handler = function(event, context) {
 
   // Shanghai Disney Resort
   var ShanghaiDR = new Themeparks.Parks.ShanghaiDisneyResortMagicKingdom();
-  ShanghaiDR.GetOpeningTimes((err, data) => {
-      if (err) return console.error("Error fetching Shanghai Disney Resort schedule: " + err);
-
-      saveSchedule('sdl_schedules', data, 8);
+  ShanghaiDR.GetOpeningTimes().then((data) => {
+    saveSchedule('sdl_schedules', data, 8);
+  }).catch((err) => {
+    console.error("Error fetching Shanghai Disney Resort schedule: " + err);
   });
 
   // retry until fetch all attractions waittime, because often fails.
@@ -142,14 +142,16 @@ exports.handler = function(event, context) {
   async.whilst(function() {
     return !get_all;
   }, function(callback) {
-    ShanghaiDR.GetWaitTimes((err, data) => {
-      if (err) return console.error("Error fetching Shanghai Disney Resort wait times: " + err);
+    ShanghaiDR.GetWaitTimes().then((data) => {
       if (data.length >= 20) get_all = true;
       if (get_all) saveWaitTime('sdl_pasts', data, dateCST);
-      setTimeout(function() {
-        console.info("Retry getting waittime for Shanghai Disney Resort");
-        callback();
-      }, 1000);
+    }).catch((err) => {
+      console.error("Error fetching Shanghai Disney Resort wait times: " + err);
+    }).then(() => {
+        setTimeout(function() {
+          console.info("Retry getting waittime for Shanghai Disney Resort");
+          callback();
+        }, 3000);
     });
   });
 };
