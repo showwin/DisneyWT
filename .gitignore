@@ -108,3 +108,4 @@ docker/mysql/dump/*
 /vendor/assets/*
 /vendor/bundle/*
 public/assets/*
+themeparks.db
