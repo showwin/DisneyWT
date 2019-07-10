@@ -96,7 +96,6 @@ exports.handler = function(event, context) {
     console.error("Error fetching Tokyo Disney Land wait times: " + err);
   });
 
-  });
   TokyoDL.GetOpeningTimes().then((data) => {
       saveSchedule('tdl_schedules', data, 9);
   }).catch((err) => {
