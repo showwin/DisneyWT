@@ -4,7 +4,7 @@
   "description": "Disney Resort Wait Time",
   "main": "fetch.js",
   "dependencies": {
-    "async": "^2.6.2",
+    "async": "^3.2.2",
     "config": "^1.31.0",
     "js-yaml": "^3.13.1",
     "mysql": "github:felixge/node-mysql",
