@@ -5,7 +5,7 @@
   "main": "fetch.js",
   "dependencies": {
     "async": "^2.6.2",
-    "config": "^1.31.0",
+    "config": "^3.3.8",
     "js-yaml": "^3.13.1",
     "mysql": "github:felixge/node-mysql",
     "themeparks": "^5.1.10",
